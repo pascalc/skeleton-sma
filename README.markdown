@@ -7,6 +7,7 @@ Installation
 After installing and setting up [rbenv](https://github.com/sstephenson/rbenv):
 
 `gem install bundle`
+
 `bundle install`
 
 Running
