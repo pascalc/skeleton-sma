@@ -26,6 +26,10 @@ class UserController < ApplicationController
 	#layout.
 	#All posts should be stored in a session variable namely session[:msgs]
 	get %r{/tagging/limit/(\d{1,99999})} do |limit|
+		def numbers
+			number_list = [{:n => 10}, {:n => 20}, {:n => 30}, {:n => 40}, {:n => 50}, {:n => 60}, {:n => 70}, {:n => 80}, {:n => 90}, {:n => 100}]
+			number_list		
+		end
   		mustache :tagging
 	end
 	
