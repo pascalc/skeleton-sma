@@ -20,9 +20,17 @@ class UserController < ApplicationController
 	post '/user' do
 		"Made a new user"
 	end
-	#ignore this section
-	get %r{/tagging/limit/(\d{0,99999})} do |limit|
+	#ignore this section it should be moved to the tagging controller
+	get %r{/tagging/limit/(\d{1,99999})} do |limit|
   		"Working, limit was #{limit}"
+	end
+
+	get %r{/tagging/commit/(\d{1,99999})} do |id|
+		"Working, commit id was #{id}"
+	end
+
+	get %r{/tagging/discard/(\d{1,99999})} do |id|
+		"Working, discard id was #{id}"
 	end
 	#stop ignore
 end
