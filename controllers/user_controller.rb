@@ -26,7 +26,7 @@ class UserController < ApplicationController
 	#layout.
 	#All posts should be stored in a session variable namely session[:msgs]
 	get %r{/tagging/limit/(\d{1,99999})} do |limit|
-  		"Working, limit was #{limit}"
+  		mustache :tagging
 	end
 	
 	#This should dispay the messages that session[:msgs] contains on the same page
