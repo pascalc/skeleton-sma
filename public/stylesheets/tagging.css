@@ -1,0 +1,34 @@
+.topTaggerWrapper{
+	float:left;
+	width:100%;
+}
+.limitWrapper{
+	float:left;
+	margin-left:20px;
+}
+#getNewMsg{
+	float:left;
+	margin-top:10px;
+}
+.taggingMsg{
+	border-style:solid;
+	border-width:1px;
+	border-color:#999999;
+}
+.top{
+	background-color:#777777;
+}
+p.message{
+	margin:0;
+	text-align: center;
+	color:#000000;
+}
+p.messageText{
+	margin:0;
+	padding-left:5px;
+	color:#000000;
+}
+.messageContainer{
+	border-style:solid;
+	border-width:0px 0px 1px 0px;
+}
