@@ -11,7 +11,7 @@ class TaggingController < ApplicationController
 
 	end
 
-	get '/tagging/edit?id=:id'
+	get '/tagging/edit?id=:id' do
 
 	end
 	#update what?

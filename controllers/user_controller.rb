@@ -20,4 +20,9 @@ class UserController < ApplicationController
 	post '/user' do
 		"Made a new user"
 	end
+	#ignore this section
+	get %r{/tagging/limit/(\d{0,99999})} do |limit|
+  		"Working, limit was #{limit}"
+	end
+	#stop ignore
 end
