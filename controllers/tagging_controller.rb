@@ -1,5 +1,5 @@
 require_relative 'application_controller'
-require 'skeleton-sma/model/tagging_retrieve'
+require_relative '../model/retrieve'
 
 class TaggingController < ApplicationController
 	
@@ -10,8 +10,9 @@ class TaggingController < ApplicationController
 	#All posts should be stored in a session variable namely session[:msgs]
 	post'/tagging/limit' do
 		"Working! You wanted to get: #{params.fetch("limit")} new messeges."
-		@tweets = tagging_retrieve.RetrieveClassificationObjects(params.fetch("limit"))
-
+		count  = params.fetch("limit")
+		r = Retrieve.new()
+		@tweets = r.RetrieveClassificationObjects(count)
 	end
 	
 	#This should dispay the messages that session[:msgs] contains on the same page
