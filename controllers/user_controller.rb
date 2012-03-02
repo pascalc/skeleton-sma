@@ -3,7 +3,8 @@ require_relative 'application_controller'
 class UserController < ApplicationController
 	# List users
 	get '/users' do
-		"List users"
+		@users = ['Pascal', 'Johan', 'Mikaela']
+		mustache :users
 	end
 
 	# Show one user
