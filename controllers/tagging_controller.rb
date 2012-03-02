@@ -11,8 +11,7 @@ class TaggingController < ApplicationController
 	post'/tagging/limit' do
 		"Working! You wanted to get: #{params.fetch("limit")} new messeges."
 		@tweets = tagging_retrieve.RetrieveClassificationObjects(params.fetch("limit"))
-		
-		puts @tweets
+
 	end
 	
 	#This should dispay the messages that session[:msgs] contains on the same page
