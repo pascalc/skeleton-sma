@@ -14,6 +14,8 @@ class TaggingController < ApplicationController
 	#This should dispay the messages that session[:msgs] contains on the same page
 	#as the %r{/tagging/limit/(\d{1,99999})} displays
 	get '/tagging' do 
+
+		#if the session[:msgs] is empty we should get some
 		mustache :tagging
 	end
 	
