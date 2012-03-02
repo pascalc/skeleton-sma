@@ -7,12 +7,13 @@ class TaggingController < ApplicationController
 	#All posts should be stored in a session variable namely session[:msgs]
 	post'/tagging/limit' do
 		"Working! You wanted to get: #{params.fetch("limit")} new messeges."
+		@tweets = tagging_retrieve.RetrieveClassificationObjects(params.fetch("limit"))
 	end
 	
 	#This should dispay the messages that session[:msgs] contains on the same page
 	#as the %r{/tagging/limit/(\d{1,99999})} displays
 	get '/tagging' do 
-		session[:msgs] = [{"source" => "twitter", "last_modified"=> "2012-03-02T10:17:46.182000", "_new"=> false, "keywords"=> ["lol", "there", "all", "dead", "#thefrenchmistake", "#spn"], "text"=> "LOl there all dead #TheFrenchMistake #SPN", "created_at"=> "Fri Mar 02 10:16:56 +0000 2012", "_id"=> 568475}]
+		session[:msgs] = @tweets
 		#if the session[:msgs] is empty we should get some
 		mustache :tagging
 	end
