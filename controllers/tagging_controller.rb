@@ -17,8 +17,8 @@ class TaggingController < ApplicationController
 	get '/tagging/:limit' do 
 		#if the messeges is empty we should get some
 		r = Retrieve.new()
-		@tweets = r.RetrieveClassificationObjects(params[:limit])
-		puts @tweets
+		@messages = r.RetrieveClassificationObjects(params[:limit])
+		puts @messages
 		mustache :tagging
 	end
 	

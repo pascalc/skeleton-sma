@@ -18,6 +18,14 @@
 			<div class="messageContainer top">
 				<p class="message">Messages</p>
 			</div>
+{{#users}}
+        <li> {{name}} </li>
+    {{/users}}
+			{{#messages}}
+				<div class="messageContainer odd">
+        			<p class="messageText">{{source}}</p><p class="date">{{created_at}}</p>
+				<div>
+			{{/messages}}
 
 
 			<div class="messageContainer odd">
