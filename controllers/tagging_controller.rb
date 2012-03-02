@@ -1,5 +1,5 @@
 require_relative 'application_controller'
-require_relative '../model/retrieve'
+require_relative '../model/tagging_retrieve'
 
 class TaggingController < ApplicationController
 	
@@ -10,14 +10,16 @@ class TaggingController < ApplicationController
 		"Working! You wanted to get: #{params.fetch("limit")} new messeges."
 		count  = params.fetch("limit")
 		r = Retrieve.new()
-		@tweets = r.RetrieveClassificationObjects(count)
+		session[:msgs] = r.RetrieveClassificationObjects(count)
+		puts session[:megs]
+		redirect :tagging
 	end
 	
 	#This should dispay the messages that session[:msgs] contains on the same page
 	#as the %r{/tagging/limit/(\d{1,99999})} displays
 	get '/tagging' do 
-		session[:msgs] = @tweets
 		#if the session[:msgs] is empty we should get some
+		puts session[:msgs]
 		mustache :tagging
 	end
 	
