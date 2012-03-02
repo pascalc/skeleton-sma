@@ -4,15 +4,15 @@ class Corpus
 	include HTTParty
 	base_uri "http://nosy.pspace.se:8888/"
 
-    def tweets
-        self.class.get "/corpus"
-    end
+  def self.tweets
+      self.get "/corpus"
+  end
 end
 
 =begin
     USAGE:
         $ irb -I .
-        > Corpus.new.tweets
+        > Corpus.tweets
     RETURNS
         [{"source"=>"twitter",
           "last_modified"=>"2012-03-02T14:17:25.173000",
