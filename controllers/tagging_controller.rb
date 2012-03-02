@@ -1,25 +1,24 @@
 require_relative 'application_controller'
 require_relative '../model/tagging_retrieve'
 
-class TaggingController < ApplicationController
-	
+class TaggingController < ApplicationController	
+
 	#This route should pull json object from the corpus and dispaly them in the appropriate
 	#layout.
 	#All posts should be stored in a session variable namely session[:msgs]
 	post'/tagging/limit' do
 		"Working! You wanted to get: #{params.fetch("limit")} new messeges."
 		count  = params.fetch("limit")
-		r = Retrieve.new()
-		session[:msgs] = r.RetrieveClassificationObjects(count)
-		puts session[:megs]
-		redirect :tagging
+		redirect "/tagging/#{count}"
 	end
 	
 	#This should dispay the messages that session[:msgs] contains on the same page
 	#as the %r{/tagging/limit/(\d{1,99999})} displays
-	get '/tagging' do 
-		#if the session[:msgs] is empty we should get some
-		puts session[:msgs]
+	get '/tagging/:limit' do 
+		#if the messeges is empty we should get some
+		r = Retrieve.new()
+		@tweets = r.RetrieveClassificationObjects(params[:limit])
+		puts @tweets
 		mustache :tagging
 	end
 	
