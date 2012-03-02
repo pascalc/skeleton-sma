@@ -2,11 +2,11 @@
 <link rel="stylesheet" href="../../stylesheets/tagging.css">
 <div class="container">
 		<div class="topTaggerWrapper">
-		<button id="getNewMsg">Get New Messages</button>
-
+		<form method="post" action="../tagging/limit">
+		<button  type="submit" id="getNewMsg">Get New Messages</button>
 			<div class = "limitWrapper">		
 			<label for="limitSelector">Select how many messeges to get</label>
-  			<select class="customTaggingSelector">
+  			<select name="limit" class="customTaggingSelector">
 				<option value="10">10</option>
     				<option value="20">20</option>
     				<option value="30">30</option>
@@ -19,6 +19,7 @@
    				<option value="100">100</option>
   			</select>
 			</div>
+		</form>
 		</div>
         	<div class="five columns alpha taggingMsg">
 			<div class="messageContainer top">

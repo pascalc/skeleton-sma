@@ -7,14 +7,14 @@ class TaggingController < ApplicationController
 	#This route should pull json object from the corpus and dispaly them in the appropriate
 	#layout.
 	#All posts should be stored in a session variable namely session[:msgs]
-	get %r{/tagging/limit/(\d{1,99999})} do |limit|
-  		mustache :tagging
+	post'/tagging/limit' do
+		"Working! You wanted to get: #{params.fetch("limit")} new messeges."
 	end
 	
 	#This should dispay the messages that session[:msgs] contains on the same page
 	#as the %r{/tagging/limit/(\d{1,99999})} displays
 	get '/tagging' do 
-		"Working!"
+		mustache :tagging
 	end
 	
 	#This route will commit a json object to the training set so that the algorythms can work with it.
