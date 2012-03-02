@@ -12,6 +12,7 @@ end
 =begin
     USAGE:
         $ irb -I .
+        > require 'corpus'
         > Corpus.new.tweets
     RETURNS
         [{"source"=>"twitter",
