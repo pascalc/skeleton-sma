@@ -31,13 +31,18 @@ p.messageText{
 	padding-left:5px;
 	color:#000000;
 	float:left;
-	width:185px;
+	width:225px;
+	padding-right:5px;
+	padding-bottom:2px;
+	padding-top:2px;
 }
 p.date{
 	margin:0;
 	color:#000000;
-	width:90px;
+	width:105px;
 	float:left;
+	padding-bottom:2px;
+	padding-top:2px;
 }
 .messageContainer{
 	border-style:solid;
@@ -50,8 +55,33 @@ p.date{
 }
 .fixedPosition{
 	position:fixed;
-	left:497px;
-	top:215px;
+	left:557px;
+	top:216px;
 	border-style:solid;
 	border-width:1px;
+}
+h4.textLable{
+	float:left;
+	width:70px;
+	clear:left;
+}
+h4.text{
+	float:left;
+	width:510px;
+}
+.gray{
+	color:#909090;
+}
+h4.postedLable{
+	float:left;
+	clear:left;
+}
+h4.locationLable{
+	float:left;
+	clear:left;
+	margin-bottom:10px;
+}
+.tags{
+	float:left;
+	clear:left;
 }
