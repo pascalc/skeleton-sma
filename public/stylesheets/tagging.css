@@ -62,12 +62,12 @@ p.date{
 }
 h4.textLable{
 	float:left;
-	width:70px;
 	clear:left;
+	margin-right:15px;
 }
 h4.text{
 	float:left;
-	width:510px;
+	width:475px;
 }
 .gray{
 	color:#909090;
@@ -75,11 +75,13 @@ h4.text{
 h4.postedLable{
 	float:left;
 	clear:left;
+	margin-right:15px;
 }
 h4.locationLable{
 	float:left;
 	clear:left;
 	margin-bottom:10px;
+	margin-right:15px;
 }
 .tags{
 	float:left;

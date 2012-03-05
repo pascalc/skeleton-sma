@@ -23,7 +23,7 @@ class TaggingController < ApplicationController
 			else
   				item.store("pos","odd")
 			end
-		puts item.keys
+		puts item
 		end
 		mustache :tagging
 	end
