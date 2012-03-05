@@ -12,13 +12,19 @@ class TaggingController < ApplicationController
 		redirect "/tagging/#{count}"
 	end
 	
-	#This should dispay the messages that session[:msgs] contains on the same page
-	#as the %r{/tagging/limit/(\d{1,99999})} displays
+	#This should dispay the messages got from the corpus 
 	get '/tagging/:limit' do 
-		#if the messeges is empty we should get some
 		r = Retrieve.new()
 		@messages = r.RetrieveClassificationObjects(params[:limit])
-		puts @messages
+						
+		@messages.each_with_index do |item,index|
+			if((index+1)%2 == 0)
+  				item.store("pos","even")	
+			else
+  				item.store("pos","odd")
+			end
+		puts item.keys
+		end
 		mustache :tagging
 	end
 	
