@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="../../stylesheets/tagging.css">
+<script src="../../javascripts/tagging.js"></script>
 <div class="container">
 		<div class="topTaggerWrapper">
 		<form method="post" action="../tagging/limit">
-		<button  type="submit" id="getNewMsg">Get New Messages</button>
+		<button  type="submit" id="getNewMsg">Get fresh list</button>
 			<div class = "limitWrapper">		
-			<label for="limitSelector">Select how many messeges to get</label>
+			<label for="limitSelector">Select how many messeges to show</label>
   			<select name="limit" class="customTaggingSelector">
 				{{#limit}}
 				<option value="{{n}}">{{n}}</option>
@@ -20,17 +21,18 @@
 			</div>
 
 			{{#messages}}
-				<div class="messageContainer {{pos}}">
+				<div onCLick="showInfo('{{_id}}');"class="messageContainer {{pos}}">
         			<p class="messageText">{{text}}</p><p class="date">{{created_at}}</p>
 				</div>
 			{{/messages}}
 
 		</div>
-		<div class="ten columns omega fixedPosition" id = "">
+		{{#messages}}
+		<div class="hidden ten columns omega fixedPosition" id = "details{{_id}}">
 
-		<h3>From: Twitter</h3>
+		<h3>From: {{source}}</h3>
 		<h4 class="textLable">Text: </h4>
-		<h4 class="text gray">LMAO at how my "lil bro" be scaring my guy friends whenever im on the phone with them lol.</h4>
+		<h4 class="text gray">{{text}}</h4>
 
 		<h4 class="postedLable">Posted by: </h4>
 		<h4 class="text gray">Author</h4>
@@ -42,8 +44,18 @@
 
 		</div>
 
-		<div class="four columns omega">Four
+		<div class="four columns omega">
+		<div>
+			<input type="text" id="regularInput" class="tagInputField">
+			<button type="submit" id="addTagg" class="tagInputButton">Add Tag</button>
+		</div>
+		<div>
+			
+		</div>
 
 		</div>
+
+		</div>
+		{{/messages}}
 </div>
 

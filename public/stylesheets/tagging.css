@@ -55,8 +55,9 @@ p.date{
 }
 .fixedPosition{
 	position:fixed;
-	left:557px;
-	top:216px;
+	left:500px;
+	top:215px;
+	padding:5px;
 	border-style:solid;
 	border-width:1px;
 }
@@ -86,4 +87,14 @@ h4.locationLable{
 .tags{
 	float:left;
 	clear:left;
+}
+input.tagInputField{
+	margin-top:4px;
+	margin-right:20px;
+	clear:left;
+	float:left;
+	width:120px;
+}
+div.hidden{
+	display:none!important;
 }
