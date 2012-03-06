@@ -29,7 +29,6 @@ class TaggingController < ApplicationController
 	end
 	
 	#This route will commit a json object to the training set so that the algorythms can work with it.
-	#The id should be a ID of an object in the session[:msgs]
 	#If the ID was not found in this variable the user should be notified.
 	#
 	#After this commit it done the session[:msgs] should be updated and the tagging page should be loaded

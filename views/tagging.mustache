@@ -21,7 +21,7 @@
 			</div>
 
 			{{#messages}}
-				<div onCLick="showInfo('{{_id}}');"class="messageContainer {{pos}}">
+				<div id="shortInfo{{_id}}" onCLick="showInfo('{{_id}}');"class="messageContainer {{pos}}">
         			<p class="messageText">{{text}}</p><p class="date">{{created_at}}</p>
 				</div>
 			{{/messages}}
@@ -30,16 +30,18 @@
 		{{#messages}}
 		<div class="hidden ten columns omega fixedPosition" id = "details{{_id}}">
 
-		<h3>From: {{source}}</h3>
+		<h3>Source: {{source}}</h3>
 		<h4 class="textLable">Text: </h4>
 		<h4 class="text gray">{{text}}</h4>
-
+		{{#author}}
 		<h4 class="postedLable">Posted by: </h4>
-		<h4 class="text gray">Author</h4>
+		<h4 class="text gray">{{author}}</h4>
+		{{/author}}
 
+		{{#location}}
 		<h4 class="locationLable">Location: </h4>
-		<h4 class="text gray">Place</h4>
-		
+		<h4 class="text gray">{{location}}</h4>
+		{{/location}}
 		<div class="six columns alpha tags">Six
 
 		</div>
