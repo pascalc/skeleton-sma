@@ -35,6 +35,7 @@ p.messageText{
 	padding-right:5px;
 	padding-bottom:2px;
 	padding-top:2px;
+	word-wrap:break-word;
 }
 p.date{
 	margin:0;
@@ -69,6 +70,7 @@ h4.textLable{
 h4.text{
 	float:left;
 	width:475px;
+	word-wrap:break-word;
 }
 .gray{
 	color:#909090;
@@ -98,3 +100,24 @@ input.tagInputField{
 div.hidden{
 	display:none!important;
 }
+.fillParent{
+	width:100%;
+}
+.proseven{
+	width:70%;
+}
+.prothree{
+	width:30%;
+}
+td{
+	padding-top:5px;
+	padding-left:5px;
+	padding-bottom:5px;
+}
+caption{
+	font-size:120%;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+tr:nth-child(even) {background: #CCCCCC}
+tr:nth-child(odd) {background: #FFFFFF}
