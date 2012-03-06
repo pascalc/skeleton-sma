@@ -7,6 +7,10 @@ class ApplicationController
             def messages
                 @messages
             end
+
+            def dummydata
+                [{:tags => 'dummy'},{:tags => 'placeholder'},{:tags => 'textdata'}]
+            end
         end
     end
 end

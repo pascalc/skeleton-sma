@@ -44,17 +44,24 @@
 		<h4 class="locationLable">Location: </h4>
 		<h4 class="text gray">{{location}}</h4>
 		{{/location}}
-		<div class="six columns alpha tags">Six
+		<div class="six columns alpha tags">
+
+		<ul id="postTags" class="tagsUL">
+		{{#dummydata}}
+			<li>{{tags}}</li>
+		{{/dummydata}}
+		</ul>
 
 		</div>
 
 		<div class="four columns omega">
 		<div>
 			<input type="text" id="regularInput" class="tagInputField">
-			<button type="submit" id="addTagg" class="tagInputButton">Add Tag</button>
+			<button id="addTagg" class="tagInputButton">Add Tag</button>
 		</div>
 		<div>
-			
+			<button onClick="discard({{_id}})"id="discardItem" class="discardButton">Discard</button>
+			<button id="commitTagging" class="commitButton">Commit Tagging</button>
 		</div>
 
 		</div>

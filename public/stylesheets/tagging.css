@@ -61,6 +61,7 @@ p.date{
 	padding:5px;
 	border-style:solid;
 	border-width:1px;
+	border-color:#CCCCCC;
 }
 h4.textLable{
 	float:left;
@@ -119,5 +120,8 @@ caption{
 	padding-top:10px;
 	padding-bottom:10px;
 }
-tr:nth-child(even) {background: #CCCCCC}
-tr:nth-child(odd) {background: #FFFFFF}
+.discardButton{
+	margin-right:20px;
+}
+tr:nth-child(even) {background: #CCCCCC;}
+tr:nth-child(odd) {background: #FFFFFF;}
