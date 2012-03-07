@@ -30,7 +30,7 @@ function addTag(postID){
     var tag = $('#tagInput'+postID).val();
 
     $('#tagInput'+postID).val('');
-
+    if(tag.trim()!=''){
     var count = $('ul#postTags'+postID+' li').length;
 
     element.append('<li id ="tagItemIndex'+count+'" onClick="hideTag('+postID+','+count+')" class="tagItem">'+tag+ '</li>');
@@ -38,9 +38,11 @@ function addTag(postID){
 
 
     $('#tagItemIndex'+count).hide().css('color','#00CC33').fadeIn('slow');
+    
     setTimeout(function() {
-             $('#tagItemIndex'+count).css('color', '#444');
+             $('#tagItemIndex'+count).stop().animate({'color': '#444'}, 1000).css('color', '#444');
     }, 1500);
+    }
 }
 function discard(postID){
     $.post('/tagging/discard/'+postID);
@@ -49,18 +51,22 @@ function discard(postID){
 }
 
 function commit(postID) {
-    var ul=$('#postTags'+postID);
+    var ul=$('ul#postTags'+postID);
     var numberOfTags = $('ul#postTags'+postID+' li').length;
-
     var tagsString = '';
 
-    for (var i =0;i<numberOfTags;i=i+1)
-    {
-        if(ul.children('#tagItemIndex'+i).is(":visible")){
-            tagsString = tagsString+ul.children('#tagItemIndex'+i).val();
+    for (var i =0;i<=numberOfTags;i=i+1){
+
+        if($('ul#postTags'+postID+' li:nth-child('+i+')').is(":visible")){
+            if(i==1){
+            tagsString = tagsString+$('ul#postTags'+postID+' li:nth-child('+i+')').text();
+            }
+            else{
+            tagsString = tagsString+','+$('ul#postTags'+postID+' li:nth-child('+i+')').text();
+            }
         }
+
     }
-    alert(tagsString)
     $.post('/tagging/commit/'+postID, {tags:tagsString});
 
     $('#'+'details' + postID).css('background-color','#99CC99').fadeOut('slow');
