@@ -40,7 +40,7 @@ function addTag(postID){
     $('#tagItemIndex'+count).hide().css('color','#00CC33').fadeIn('slow');
     setTimeout(function() {
              $('#tagItemIndex'+count).css('color', '#444');
-      }, 1900);
+    }, 1500);
 }
 function discard(postID){
     $.post('/tagging/discard/'+postID);
@@ -48,6 +48,21 @@ function discard(postID){
     $('#'+'shortInfo' + postID).removeClass('selected').css('background-color','#FFC0C0').fadeOut('slow');
 }
 
-function pause(delay) {
-    $(this).delay(delay);
-};
+function commit(postID) {
+    var ul=$('#postTags'+postID);
+    var numberOfTags = $('ul#postTags'+postID+' li').length;
+
+    var tagsString = '';
+
+    for (var i =0;i<numberOfTags;i=i+1)
+    {
+        if(ul.children('#tagItemIndex'+i).is(":visible")){
+            tagsString = tagsString+ul.children('#tagItemIndex'+i).val();
+        }
+    }
+    alert(tagsString)
+    $.post('/tagging/commit/'+postID, {tags:tagsString});
+
+    $('#'+'details' + postID).css('background-color','#99CC99').fadeOut('slow');
+    $('#'+'shortInfo' + postID).removeClass('selected').css('background-color','#99CC99').fadeOut('slow');
+}
