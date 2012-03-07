@@ -9,7 +9,7 @@ class ApplicationController
             end
 
             def dummydata
-                [{:tags => 'dummy'},{:tags => 'placeholder'},{:tags => 'textdata'}]
+                [{:tags => 'dummy'},{:tags => 'placeholder'},{:tags => 'textdata'},{:tags => 'Test'}]
             end
         end
     end

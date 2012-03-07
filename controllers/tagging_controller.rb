@@ -19,7 +19,7 @@ class TaggingController < ApplicationController
 		end
 		mustache :tagging
 	end
-	
+		
 	#This route will commit a json object to the training set so that the algorythms can work with it.
 	#If the ID was not found in this variable the user should be notified.
 	#
