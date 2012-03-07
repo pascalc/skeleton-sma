@@ -62,6 +62,7 @@ p.date{
 	border-style:solid;
 	border-width:1px;
 	border-color:#CCCCCC;
+	background-color:#EEEEFF;
 }
 h4.textLable{
 	float:left;
@@ -127,7 +128,7 @@ caption{
 	float:left;
 	margin-right:20px;
 }
-tr:nth-child(even) {background: #CCCCCC;}
+tr:nth-child(even) {background: #F0F0F0;}
 tr:nth-child(odd) {background: #FFFFFF;}
-tr.messageItem:hover{background:#00CCFF;}
-tr.selected{background:#00CC66!important;}
+tr.messageItem:hover{background:#BBCCFF;}
+tr.selected{background:#99CC99!important;}

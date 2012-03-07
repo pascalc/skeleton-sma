@@ -29,7 +29,14 @@ function addTag(postID){
 
     var tag = $('#tagInput'+postID).val();
 
+    $('#tagInput'+postID).val('');
+
     var count = $('ul#postTags'+postID+' li').length;
 
     element.append('<li id ="tagItemIndex'+count+'" onClick="hideTag('+postID+','+count+')" class="tagItem">'+tag+ '</li>');
+}
+function discard(postID){
+    $.post('/tagging/discard/'+postID);
+    $('#'+'details' + postID).fadeOut();
+    $('#'+'shortInfo' + postID).fadeOut();
 }

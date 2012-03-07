@@ -24,8 +24,8 @@ class TaggingController < ApplicationController
 	#If the ID was not found in this variable the user should be notified.
 	#
 	#After this commit it done the session[:msgs] should be updated and the tagging page should be loaded
-	post %r{/tagging/commit/(\d{1,99999})} do |id|
-		"Working, commit id was #{id}"
+	post %r{/tagging/commit/(\d{1,99999})/(\d{1,99999})} do |id,count|
+		"Working, commit id was #{id} and the number or parameters should be #{count}"
 	end
 
 	#Removes a message form the database and from the session[:msgs]
