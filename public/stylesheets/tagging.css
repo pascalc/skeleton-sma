@@ -8,10 +8,12 @@
 }
 #getNewMsg{
 	float:left;
-	margin-top:10px;
+	margin-top:9px;
+	margin-bottom:0px;
 }
 .customTaggingSelector{
 	width:80px;
+	margin-bottom:0px;
 }
 .taggingMsg{
 	border-style:solid;
@@ -20,6 +22,13 @@
 }
 .top{
 	background-color:#777777;
+}
+input.filterInputField{
+margin-bottom:15px;
+}
+.filterDiv{
+	float: left;
+	margin-left: 40px;
 }
 p.message{
 	margin:0;
@@ -57,7 +66,7 @@ p.date{
 .fixedPosition{
 	position:fixed;
 	left:575px;
-	top:215px;
+	top:220px;
 	padding:5px;
 	border-style:solid;
 	border-width:1px;

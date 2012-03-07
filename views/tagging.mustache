@@ -6,12 +6,16 @@
 		<form method="post" action="../tagging/limit">
 		<button  type="submit" id="getNewMsg">Get fresh list</button>
 			<div class = "limitWrapper">		
-			<label for="limitSelector">Select how many messeges to show</label>
+			<label for="limit">Select how many messeges to show</label>
   			<select name="limit" class="customTaggingSelector">
 				{{#limit}}
 				<option value="{{n}}">{{n}}</option>
 				{{/limit}}
   			</select>
+			</div>
+			<div class="filterDiv" >
+				<label for="filter">Write comma-seperated tags for filer</label>
+				<input name="filter" type="text"  class="filterInputField">
 			</div>
 		</form>
 		</div>

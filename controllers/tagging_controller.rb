@@ -6,6 +6,8 @@ class TaggingController < ApplicationController
 	post'/tagging/limit' do
 		"Working! You wanted to get: #{params.fetch("limit")} new messeges."
 		count  = params.fetch("limit")
+		@filters = params.fetch("filter");
+		puts @filters
 		redirect "/tagging/#{count}"
 	end
 	
@@ -15,7 +17,7 @@ class TaggingController < ApplicationController
 		@messages = r.RetrieveClassificationObjects(params[:limit])
 						
 		@messages.each_with_index do |item,index|
-			puts item
+			#get the tags for the items here
 		end
 		mustache :tagging
 	end
@@ -24,14 +26,14 @@ class TaggingController < ApplicationController
 	#If the ID was not found in this variable the user should be notified.
 	#
 	#After this commit it done the session[:msgs] should be updated and the tagging page should be loaded
-	post %r{/tagging/commit/(\d{1,99999})/(\d{1,99999})} do |id,count|
-		"Working, commit id was #{id} and the number or parameters should be #{count}"
+	post %r{/tagging/commit/(\d{1,99999})} do |id|
+		puts "Working, commit id was #{id} and the tags string should have been #{params.fetch('tags')}"
 	end
 
 	#Removes a message form the database and from the session[:msgs]
 	#
 	#After this discard it done the session[:msgs] should be updated and the tagging page should be loaded
 	post %r{/tagging/discard/(\d{1,99999})} do |id|
-		"Working, discard id was #{id}"
+		puts "Discard working, discard id was #{id}"
 	end
 end
