@@ -1,30 +1,41 @@
 require_relative 'application_controller'
-require_relative '../model/retrieve'
+require_relative '../model/tagging_retrieve'
 
+class TaggingController < ApplicationController	
+
+<<<<<<< HEAD
 class TaggingController < ApplicationController
 	
 	
 	
+=======
+>>>>>>> 8ab200ce6018cf9c8b2ec99725c53b6a1de3f131
 	#This route should pull json object from the corpus and dispaly them in the appropriate
 	#layout.
 	#All posts should be stored in a session variable namely session[:msgs]
 	post'/tagging/limit' do
 		"Working! You wanted to get: #{params.fetch("limit")} new messeges."
 		count  = params.fetch("limit")
-		r = Retrieve.new()
-		@tweets = r.RetrieveClassificationObjects(count)
+		redirect "/tagging/#{count}"
 	end
 	
-	#This should dispay the messages that session[:msgs] contains on the same page
-	#as the %r{/tagging/limit/(\d{1,99999})} displays
-	get '/tagging' do 
-		session[:msgs] = @tweets
-		#if the session[:msgs] is empty we should get some
+	#This should dispay the messages got from the corpus 
+	get '/tagging/:limit' do 
+		r = Retrieve.new()
+		@messages = r.RetrieveClassificationObjects(params[:limit])
+						
+		@messages.each_with_index do |item,index|
+			if((index+1)%2 == 0)
+  				item.store("pos","even")	
+			else
+  				item.store("pos","odd")
+			end
+		puts item
+		end
 		mustache :tagging
 	end
 		
 	#This route will commit a json object to the training set so that the algorythms can work with it.
-	#The id should be a ID of an object in the session[:msgs]
 	#If the ID was not found in this variable the user should be notified.
 	#
 	#After this commit it done the session[:msgs] should be updated and the tagging page should be loaded

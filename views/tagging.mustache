@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="../../stylesheets/tagging.css">
+<script src="../../javascripts/tagging.js"></script>
 <div class="container">
 		<div class="topTaggerWrapper">
 		<form method="post" action="../tagging/limit">
-		<button  type="submit" id="getNewMsg">Get New Messages</button>
+		<button  type="submit" id="getNewMsg">Get fresh list</button>
 			<div class = "limitWrapper">		
-			<label for="limitSelector">Select how many messeges to get</label>
+			<label for="limitSelector">Select how many messeges to show</label>
   			<select name="limit" class="customTaggingSelector">
 				{{#limit}}
 				<option value="{{n}}">{{n}}</option>
@@ -14,146 +15,58 @@
 			</div>
 		</form>
 		</div>
-        	<div class="five columns alpha taggingMsg">
-			<div class="messageContainer top">
-				<p class="message">Messages</p>
-			</div>
+        	<div class="six columns alpha taggingMsg">
+			<table id="table" class="fillParent">
+			<tr class="messageContainer top">
+				<caption ><b>Message overview</b></caption>
+			</tr>
 
-
-			<div class="messageContainer odd">
-				<p class="messageText">Messages</p><p class="date">7/30 - 2012</p>
-			</div>
-			<div class="messageContainer even">
-				<p class="messageText">Messages</p>
-			</div>
-			
-
-			<div class="messageContainer odd">
-				<p class="messageText">Messages</p>
-			</div>
-			<div class="messageContainer even">
-				<p class="messageText">Messages</p>
-			</div>
-
-			<div class="messageContainer odd">
-				<p class="messageText">Messages</p>
-			</div>
-			<div class="messageContainer even">
-				<p class="messageText">Messages</p>
-			</div>
-
-
-			<div class="messageContainer odd">
-				<p class="messageText">Messages</p>
-			</div>
-			<div class="messageContainer even">
-				<p class="messageText">Messages</p>
-			</div>
-
-
-
-			<div class="messageContainer odd">
-				<p class="messageText">Messages</p>
-			</div>
-			<div class="messageContainer even">
-				<p class="messageText">Messages</p>
-			</div>
-
-			<div class="messageContainer odd">
-				<p class="messageText">Messages</p>
-			</div>
-			<div class="messageContainer even">
-				<p class="messageText">Messages</p>
-			</div>
-
-
-
-			<div class="messageContainer odd">
-				<p class="messageText">Messages</p>
-			</div>
-			<div class="messageContainer even">
-				<p class="messageText">Messages</p>
-			</div>
-
-
-
-
-
-			<div class="messageContainer odd">
-				<p class="messageText">Messages</p>
-			</div>
-			<div class="messageContainer even">
-				<p class="messageText">Messages</p>
-			</div>
-
-
-			<div class="messageContainer odd">
-				<p class="messageText">Messages</p>
-			</div>
-			<div class="messageContainer even">
-				<p class="messageText">Messages</p>
-			</div>
-
-
-			<div class="messageContainer odd">
-				<p class="messageText">Messages</p>
-			</div>
-			<div class="messageContainer even">
-				<p class="messageText">Messages</p>
-			</div>
-
-			<div class="messageContainer odd">
-				<p class="messageText">Messages</p>
-			</div>
-			<div class="messageContainer even">
-				<p class="messageText">Messages</p>
-			</div>
-
-			<div class="messageContainer odd">
-				<p class="messageText">Messages</p>
-			</div>
-			<div class="messageContainer even">
-				<p class="messageText">Messages</p>
-			</div>
-
-
-
-			<div class="messageContainer odd">
-				<p class="messageText">Messages</p>
-			</div>
-			<div class="messageContainer even">
-				<p class="messageText">Messages</p>
-			</div>
-
-
-
-
-
-			<div class="messageContainer odd">
-				<p class="messageText">Messages</p>
-			</div>
-			<div class="messageContainer even">
-				<p class="messageText">Messages</p>
-			</div>
-
-
-			<div class="messageContainer odd">
-				<p class="messageText">Messages</p>
-			</div>
-			<div class="messageContainer even">
-				<p class="messageText">Messages</p>
-			</div>
-
-
-			<div class="messageContainer odd">
-				<p class="messageText">Messages</p>
-			</div>
-			<div class="messageContainer even">
-				<p class="messageText">Messages</p>
-			</div>
-
+			{{#messages}}
+				<tr id="shortInfo{{_id}}" onCLick="showInfo('{{_id}}');"class="messageContainer messageItem">
+        			<td class="proseven">{{text}}</td><td class="">{{created_at}}</td>
+				</tr>
+			{{/messages}}
+			</table>
 
 		</div>
-		<div class="ten columns omega fixedPosition">Put detailed info about the messeges here.</div>
+		{{#messages}}
+		<div class="hidden ten columns omega fixedPosition" id = "details{{_id}}">
+
+		<h3>Source: {{source}}</h3>
+		<h4 class="textLable">Text: </h4>
+		<h4 class="text gray">{{text}}</h4>
+		{{#author}}
+		<h4 class="postedLable">Posted by: </h4>
+		<h4 class="text gray">{{author}}</h4>
+		{{/author}}
+
+		{{#location}}
+		<h4 class="locationLable">Location: </h4>
+		<h4 class="text gray">{{location}}</h4>
+		{{/location}}
+		<div class="six columns alpha tags">
+
+		<ul id="postTags" class="tagsUL">
+		{{#dummydata}}
+			<li>{{tags}}</li>
+		{{/dummydata}}
+		</ul>
+
+		</div>
+
+		<div class="four columns omega">
+		<div>
+			<input type="text" id="regularInput" class="tagInputField">
+			<button id="addTagg" class="tagInputButton">Add Tag</button>
+		</div>
+		<div>
+			<button onClick="discard({{_id}})"id="discardItem" class="discardButton">Discard</button>
+			<button id="commitTagging" class="commitButton">Commit Tagging</button>
+		</div>
+
+		</div>
+
+		</div>
+		{{/messages}}
 </div>
 

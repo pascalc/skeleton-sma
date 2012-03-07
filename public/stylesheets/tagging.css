@@ -31,13 +31,19 @@ p.messageText{
 	padding-left:5px;
 	color:#000000;
 	float:left;
-	width:185px;
+	width:225px;
+	padding-right:5px;
+	padding-bottom:2px;
+	padding-top:2px;
+	word-wrap:break-word;
 }
 p.date{
 	margin:0;
 	color:#000000;
-	width:90px;
+	width:105px;
 	float:left;
+	padding-bottom:2px;
+	padding-top:2px;
 }
 .messageContainer{
 	border-style:solid;
@@ -50,8 +56,74 @@ p.date{
 }
 .fixedPosition{
 	position:fixed;
-	left:497px;
+	left:500px;
 	top:215px;
+	padding:5px;
 	border-style:solid;
 	border-width:1px;
+	border-color:#CCCCCC;
 }
+h4.textLable{
+	float:left;
+	clear:left;
+	margin-right:15px;
+}
+h4.text{
+	float:left;
+	width:475px;
+	word-wrap:break-word;
+}
+.gray{
+	color:#909090;
+}
+h4.postedLable{
+	float:left;
+	clear:left;
+	margin-right:15px;
+}
+h4.locationLable{
+	float:left;
+	clear:left;
+	margin-bottom:10px;
+	margin-right:15px;
+}
+.tags{
+	float:left;
+	clear:left;
+}
+input.tagInputField{
+	margin-top:4px;
+	margin-right:20px;
+	clear:left;
+	float:left;
+	width:120px;
+}
+div.hidden{
+	display:none!important;
+}
+.fillParent{
+	width:100%;
+}
+.proseven{
+	width:70%;
+}
+.prothree{
+	width:30%;
+}
+td{
+	padding-top:5px;
+	padding-left:5px;
+	padding-bottom:5px;
+}
+caption{
+	font-size:120%;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+.discardButton{
+	margin-right:20px;
+}
+tr:nth-child(even) {background: #CCCCCC;}
+tr:nth-child(odd) {background: #FFFFFF;}
+tr.messageItem:hover{background:#00CCFF;}
+tr.selected{background:#00CC66;}
