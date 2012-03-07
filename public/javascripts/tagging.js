@@ -37,6 +37,6 @@ function addTag(postID){
 }
 function discard(postID){
     $.post('/tagging/discard/'+postID);
-    $('#'+'details' + postID).fadeOut();
-    $('#'+'shortInfo' + postID).fadeOut();
+    $('#'+'details' + postID).css('background-color','#FFC0C0').fadeOut('slow');
+    $('#'+'shortInfo' + postID).removeClass('selected').css('background-color','#FFC0C0').fadeOut('slow');
 }
