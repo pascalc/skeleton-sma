@@ -27,7 +27,7 @@
 				</tr>
 			{{/messages}}
 			</table>
-
+		{{#initdummydata}}{{/initdummydata}}
 		</div>
 		{{#messages}}
 		<div class="hidden ten columns omega fixedPosition" id = "details{{_id}}">
@@ -46,9 +46,9 @@
 		{{/location}}
 		<div class="six columns alpha tags">
 
-		<ul id="postTags" class="tagsUL">
+		<ul id="postTags{{_id}}" class="tagsUL">
 		{{#dummydata}}
-			<li class="tagItem">{{tags}}</li>
+			<li id ="tagItemIndex{{index}}" onClick="hideTag({{_id}},{{index}})" class="tagItem">{{tags}}</li>
 		{{/dummydata}}
 		</ul>
 

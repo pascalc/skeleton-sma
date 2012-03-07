@@ -8,9 +8,20 @@ class ApplicationController
                 @messages
             end
 
-            def dummydata
-                [{:tags => 'dummy'},{:tags => 'placeholder'},{:tags => 'textdata'},{:tags => 'Test'}]
+            def initdummydata
+                @dummydata = [{:tags => 'dummy'},{:tags => 'placeholder'},{:tags => 'textdata'},{:tags => 'Test'}]
+
+
+		
+		@dummydata.each_with_index do |item,index|
+			item.store('index', index)
+		end
+		puts @dummydata
             end
+            def dummydata
+                @dummydata
+            end
+
         end
     end
 end

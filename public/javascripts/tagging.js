@@ -6,7 +6,6 @@ function showInfo(postID) {
     element.hide();
     element.fadeIn('fast');
 
-
     $('#'+'shortInfo' + postID).addClass('selected');
 
     var tempID1 = parseInt(lastPostID);
@@ -20,5 +19,9 @@ function hideInfo(postID) {
     var element=  $('#'+'details' + postID);
     element.addClass('hidden');
     $('#'+'shortInfo' + postID).removeClass('selected');
+}
+function hideTag(postID,index){
+    var element=$('#postTags'+postID);
+   element.children("#tagItemIndex"+index).fadeOut('slow');
 }
 
