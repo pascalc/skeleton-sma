@@ -1,22 +1,48 @@
 require_relative 'application_controller'
 require_relative '../model/tagging_retrieve'
 
-class TaggingController < ApplicationController	
+class TaggingController < ApplicationController
+
 
 	post'/tagging/limit' do
 		"Working! You wanted to get: #{params.fetch("limit")} new messeges."
 		count  = params.fetch("limit")
-		@filters = params.fetch("filter");
-		puts @filters
-		redirect "/tagging/#{count}"
+		
+		filters = params.fetch('filter')
+		filters = filters.gsub(' ', ',')
+		sanitized = filters.split(',')
+		sanitized.delete_if(&:empty?)
+		filters = ''
+		sanitized.each do |value|
+		filters = filters.concat(value).concat(',')
+		end
+		filters = filters.chomp(',')
+		redirect "/tagging/#{count}/?filter=#{filters}"
 	end
 	
 	#This should dispay the messages got from the corpus 
-	get '/tagging/:limit' do 
+	get '/tagging/:limit/?' do 
 		r = Retrieve.new()
-		@messages = r.RetrieveClassificationObjects(params[:limit])
+		if(params.has_key?('filter'))
+		@filters = params.fetch('filter');
+		else
+			@filters = ''
+		end
+
+		@messages = r.RetrieveClassificationObjects(params[:limit],@filters)
+		@filters = ''#reset filters variable not sure if necessary
 						
-		@messages.each_with_index do |item,index|
+		@messages.each do |item|
+			#get the tags for the items here
+		end
+		mustache :tagging
+	end
+	get '/tagging/:limit' do
+		r = Retrieve.new()
+		
+		@messages = r.RetrieveClassificationObjects(params[:limit],'')
+						
+		@messages.each do |item|
 			#get the tags for the items here
 		end
 		mustache :tagging

@@ -16,7 +16,6 @@ class ApplicationController
 		@dummydata.each_with_index do |item,index|
 			item.store('index', index)
 		end
-		puts @dummydata
             end
             def dummydata
                 @dummydata
