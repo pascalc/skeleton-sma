@@ -46,8 +46,9 @@ function addTag(postID){
 }
 function discard(postID){
     $.post('/tagging/discard/'+postID);
-    $('#'+'details' + postID).css('background-color','#FFC0C0').fadeOut('slow');
-    $('#'+'shortInfo' + postID).removeClass('selected').css('background-color','#FFC0C0').fadeOut('slow');
+    $('#'+'details' + postID).css('background-color','#FFC0C0').fadeOut('slow').remove();
+    $('#'+'shortInfo' + postID).removeClass('selected').css('background-color','#FFC0C0').fadeOut('slow').remove();
+    updateList();
 }
 
 function commit(postID) {
@@ -69,6 +70,11 @@ function commit(postID) {
     }
     $.post('/tagging/commit/'+postID, {tags:tagsString});
 
-    $('#'+'details' + postID).css('background-color','#99CC99').fadeOut('slow');
-    $('#'+'shortInfo' + postID).removeClass('selected').css('background-color','#99CC99').fadeOut('slow');
+    $('#'+'details' + postID).css('background-color','#99CC99').fadeOut('slow').remove();
+    $('#'+'shortInfo' + postID).removeClass('selected').css('background-color','#99CC99').fadeOut('slow').remove();
+    updateList();
+}
+function updateList(){
+    $('tr.messageItem:nth-child(even)').css('background','#F0F0F0');
+    $('tr.messageItem:nth-child(odd)').css('background','#FFFFFF');
 }
