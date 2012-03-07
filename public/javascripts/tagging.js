@@ -22,7 +22,8 @@ function hideInfo(postID) {
 }
 function hideTag(postID,index){
     var element=$('#postTags'+postID);
-    element.children("#tagItemIndex"+index).css('color','#FF0000').fadeOut('slow');
+    element.children("#tagItemIndex"+index).css('color','#FF0000').fadeOut('slow',function () 
+{element.children("#tagItemIndex"+index).remove();});
 }
 function addTag(postID){
     var element=$('#postTags'+postID);
@@ -40,13 +41,12 @@ function addTag(postID){
     $('#tagItemIndex'+count).hide().css('color','#00CC33').fadeIn('slow');
     
     setTimeout(function() {
-             $('#tagItemIndex'+count).stop().animate({'color': '#444'}, 1000).css('color', '#444');
-    }, 1500);
+             $('#tagItemIndex'+count).stop().animate({'color': '#444'}, 1000).css('color', '#444');}, 1500);
     }
 }
 function discard(postID){
     $.post('/tagging/discard/'+postID);
-    $('#'+'details' + postID).css('background-color','#FFC0C0').fadeOut('slow').remove();
+    $('#'+'details' + postID).css('background-color','#FFC0C0').fadeOut('slow',function(){$('#'+'details' + postID).remove()});
 
     $('#'+'shortInfo' + postID).removeClass('selected').css('background-color','#FFC0C0').slideUp('slow',function () 
 {$('#'+'shortInfo' + postID).remove();updateList();});
@@ -72,7 +72,7 @@ function commit(postID) {
     }
     $.post('/tagging/commit/'+postID, {tags:tagsString});
 
-    $('#'+'details' + postID).css('background-color','#99CC99').fadeOut('slow').remove();
+    $('#'+'details' + postID).css('background-color','#99CC99').fadeOut('slow',function(){$('#'+'details' + postID).remove();});
     $('#'+'shortInfo' + postID).removeClass('selected').css('background-color','#99CC99').slideUp('slow',function () 
 {$('#'+'shortInfo' + postID).remove();updateList();});
 }
