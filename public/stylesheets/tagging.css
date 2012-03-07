@@ -123,7 +123,11 @@ caption{
 .discardButton{
 	margin-right:20px;
 }
+.tagItem{
+	float:left;
+	margin-right:20px;
+}
 tr:nth-child(even) {background: #CCCCCC;}
 tr:nth-child(odd) {background: #FFFFFF;}
 tr.messageItem:hover{background:#00CCFF;}
-tr.selected{background:#00CC66;}
+tr.selected{background:#00CC66!important;}

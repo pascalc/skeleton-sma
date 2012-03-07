@@ -3,9 +3,6 @@ require_relative '../model/tagging_retrieve'
 
 class TaggingController < ApplicationController	
 
-	#This route should pull json object from the corpus and dispaly them in the appropriate
-	#layout.
-	#All posts should be stored in a session variable namely session[:msgs]
 	post'/tagging/limit' do
 		"Working! You wanted to get: #{params.fetch("limit")} new messeges."
 		count  = params.fetch("limit")
@@ -18,12 +15,7 @@ class TaggingController < ApplicationController
 		@messages = r.RetrieveClassificationObjects(params[:limit])
 						
 		@messages.each_with_index do |item,index|
-			if((index+1)%2 == 0)
-  				item.store("pos","even")	
-			else
-  				item.store("pos","odd")
-			end
-		puts item
+			puts item
 		end
 		mustache :tagging
 	end
