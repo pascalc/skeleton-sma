@@ -3,13 +3,6 @@ require_relative '../model/tagging_retrieve'
 
 class TaggingController < ApplicationController	
 
-<<<<<<< HEAD
-class TaggingController < ApplicationController
-	
-	
-	
-=======
->>>>>>> 8ab200ce6018cf9c8b2ec99725c53b6a1de3f131
 	#This route should pull json object from the corpus and dispaly them in the appropriate
 	#layout.
 	#All posts should be stored in a session variable namely session[:msgs]
