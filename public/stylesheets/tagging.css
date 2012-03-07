@@ -125,3 +125,5 @@ caption{
 }
 tr:nth-child(even) {background: #CCCCCC;}
 tr:nth-child(odd) {background: #FFFFFF;}
+tr.messageItem:hover{background:#00CCFF;}
+tr.selected{background:#00CC66;}
