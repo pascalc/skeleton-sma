@@ -24,4 +24,12 @@ function hideTag(postID,index){
     var element=$('#postTags'+postID);
    element.children("#tagItemIndex"+index).fadeOut('slow');
 }
+function addTag(postID){
+    var element=$('#postTags'+postID);
 
+    var tag = $('#tagInput'+postID).val();
+
+    var count = $('ul#postTags'+postID+' li').length;
+
+    element.append('<li id ="tagItemIndex'+count+'" onClick="hideTag('+postID+','+count+')" class="tagItem">'+tag+ '</li>');
+}

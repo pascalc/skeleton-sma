@@ -56,8 +56,8 @@
 
 		<div class="four columns omega">
 		<div>
-			<input type="text" id="regularInput" class="tagInputField">
-			<button id="addTagg" class="tagInputButton">Add Tag</button>
+			<input type="text" id="tagInput{{_id}}" class="tagInputField">
+			<button onClick="addTag({{_id}})" id="addTagg" class="tagInputButton">Add Tag</button>
 		</div>
 		<div>
 			<button onClick="discard({{_id}})"id="discardItem" class="discardButton">Discard</button>
