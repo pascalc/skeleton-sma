@@ -43,6 +43,9 @@ function addTag(postID){
     setTimeout(function() {
              $('#tagItemIndex'+count).stop().animate({'color': '#444'}, 1000).css('color', '#444');}, 1500);
     }
+    else{
+    //flash the input with red here
+    }
 }
 function discard(postID){
     $.post('/tagging/discard/'+postID);
