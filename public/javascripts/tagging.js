@@ -87,6 +87,6 @@ function commit(postID) {
 {$('#'+'shortInfo' + postID).remove();updateList();});
 }
 function updateList(){
-    $('tr.messageItem:nth-child(even)').css('background','#F0F0F0');
-    $('tr.messageItem:nth-child(odd)').css('background','#FFFFFF');
+    //$('tr.messageItem:nth-child(even)').css('background','#F0F0F0');
+    //$('tr.messageItem:nth-child(odd)').css('background','#FFFFFF');
 }
