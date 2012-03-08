@@ -32,6 +32,7 @@ function addTag(postID){
 
     $('#tagInput'+postID).val('');
     if(tag.trim()!=''){
+    $('#tagInput'+postID).css('background-color','#FFFFFF');
     var count = $('ul#postTags'+postID+' li').length;
 
     element.append('<li id ="tagItemIndex'+count+'" onClick="hideTag('+postID+','+count+')" class="tagItem">'+tag+ '</li>');
@@ -44,7 +45,7 @@ function addTag(postID){
              $('#tagItemIndex'+count).stop().animate({'color': '#444'}, 1000).css('color', '#444');}, 1500);
     }
     else{
-    //flash the input with red here
+    $('#tagInput'+postID).css('background-color','#FFC0C0');
     }
 }
 function discard(postID){
