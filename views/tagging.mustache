@@ -13,6 +13,7 @@
 				{{/limit}}
   			</select>
 			</div>
+			{{#selected}}<div onload="happycode();" class="hidden"id="selected">{{number}}</div>{{/selected}}
 			<div class="filterDiv" >
 				<label for="filter">Write comma-seperated tags for filter</label>
 				<input name="filter" type="text"  class="filterInputField">

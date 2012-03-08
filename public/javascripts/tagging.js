@@ -1,5 +1,10 @@
 var lastPostID;
 
+function happycode() {
+    var selected= $('#selected').text();
+    alert(selected);
+}
+
 function showInfo(postID) {
     var element=  $('#'+'details' + postID);
     element.removeClass('hidden');
@@ -12,6 +17,7 @@ function showInfo(postID) {
     var tempID2 = parseInt(postID);
     if(tempID1!=tempID2){
         hideInfo(lastPostID)
+	$('#tagInput'+postID).css('background-color','#FFFFFF');
     }
     lastPostID = postID;
 }

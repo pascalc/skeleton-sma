@@ -28,6 +28,8 @@ class TaggingController < ApplicationController
 		else
 			@filters = ''
 		end
+		@selected  = Hash.new
+		@selected.store('number',params[:limit])
 
 		@messages = r.RetrieveClassificationObjects(params[:limit],@filters)
 		@filters = ''#reset filters variable not sure if necessary
@@ -41,7 +43,8 @@ class TaggingController < ApplicationController
 		r = Retrieve.new()
 		
 		@messages = r.RetrieveClassificationObjects(params[:limit],'')
-						
+		@selected  = Hash.new
+		@selected.store('number',params[:limit])
 		@messages.each do |item|
 			#get the tags for the items here
 		end

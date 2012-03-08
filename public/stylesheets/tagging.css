@@ -116,6 +116,7 @@ div.hidden{
 }
 .proseven{
 	width:70%;
+	word-wrap:break-word;
 }
 .prothree{
 	width:30%;
@@ -147,3 +148,4 @@ tr:nth-child(even) {background: #F0F0F0;}
 tr:nth-child(odd) {background: #FFFFFF;}
 tr.messageItem:hover{background:#BBCCFF;}
 tr.selected{background:#99CC99!important;}
+tr.messageItem{overflow:hidden;}
