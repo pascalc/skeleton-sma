@@ -8,10 +8,12 @@
 }
 #getNewMsg{
 	float:left;
-	margin-top:10px;
+	margin-top:9px;
+	margin-bottom:0px;
 }
 .customTaggingSelector{
 	width:80px;
+	margin-bottom:0px;
 }
 .taggingMsg{
 	border-style:solid;
@@ -20,6 +22,13 @@
 }
 .top{
 	background-color:#777777;
+}
+input.filterInputField{
+margin-bottom:15px;
+}
+.filterDiv{
+	float: left;
+	margin-left: 40px;
 }
 p.message{
 	margin:0;
@@ -56,12 +65,13 @@ p.date{
 }
 .fixedPosition{
 	position:fixed;
-	left:500px;
-	top:215px;
+	left:575px;
+	top:220px;
 	padding:5px;
 	border-style:solid;
 	border-width:1px;
 	border-color:#CCCCCC;
+	background-color:#EEEEFF;
 }
 h4.textLable{
 	float:left;
@@ -106,6 +116,7 @@ div.hidden{
 }
 .proseven{
 	width:70%;
+	word-wrap:break-word;
 }
 .prothree{
 	width:30%;
@@ -127,7 +138,14 @@ caption{
 	float:left;
 	margin-right:20px;
 }
-tr:nth-child(even) {background: #CCCCCC;}
+.marginBot{
+	margin-bottom:50px;
+}
+.floatLeft{
+	float:left;
+}
+tr:nth-child(even) {background: #F0F0F0;}
 tr:nth-child(odd) {background: #FFFFFF;}
-tr.messageItem:hover{background:#00CCFF;}
-tr.selected{background:#00CC66!important;}
+tr.messageItem:hover{background:#BBCCFF;}
+tr.selected{background:#99CC99!important;}
+tr.messageItem{overflow:hidden;}
