@@ -7,7 +7,22 @@ class EvaluateController < ApplicationController
 	get '/evaluate' do
 		count = 10
 		retriever = EvaluateRetrieve.new()
-		@messages = retriever.RetrieveClassificationObjects(count)
+		
+		if(params.has_key?('filter'))
+			filters = params.fetch('filter')
+			filters = filters.gsub(' ', ',')
+			sanitized = filters.split(',')
+			sanitized.delete_if(&:empty?)
+			filters = ''
+			sanitized.each do |value|
+				filters = filters.concat(value).concat(',')
+			end
+			filters = filters.chomp(',')
+			@filters = filters
+		else
+			@filters = ''
+		end
+		@messages = retriever.RetrieveClassificationObjects(count,@filters)
 		puts @messages
 		mustache :evaluate
 	end
@@ -15,7 +30,21 @@ class EvaluateController < ApplicationController
 	post '/evaluate/limit' do
 		count = params.fetch("limit")
 		retriever = EvaluateRetrieve.new()
-		@messages = retriever.RetrieveClassificationObjects(count)
+		if(params.has_key?('filter'))
+			filters = params.fetch('filter')
+			filters = filters.gsub(' ', ',')
+			sanitized = filters.split(',')
+			sanitized.delete_if(&:empty?)
+			filters = ''
+			sanitized.each do |value|
+				filters = filters.concat(value).concat(',')
+			end
+			filters = filters.chomp(',')
+			@filters = filters
+		else
+			@filters = ''
+		end
+		@messages = retriever.RetrieveClassificationObjects(count,@filters)
 		puts @messages
 		mustache :evaluate
 	end
