@@ -1,10 +1,12 @@
 require_relative 'application_controller'
 require_relative '../model/evaluate_retrieve.rb'
+require_relative '../model/modify_algorithms.rb'
+
 
 class EvaluateController < ApplicationController
 
 	#Displays 10 messages for classifier by default using the evaluate view
-	get '/evaluate' do
+	get '/evaluate/?' do
 		count = 10
 		retriever = EvaluateRetrieve.new()
 		
@@ -43,9 +45,24 @@ class EvaluateController < ApplicationController
 			@filters = filters
 		else
 			@filters = ''
-		end
+		end 
 		@messages = retriever.RetrieveClassificationObjects(count,@filters)
 		puts @messages
 		mustache :evaluate
+	end
+
+	get '/evaluate/edit' do
+		mustache :edit_algorithms
+	end
+
+	post '/evaluate/modify' do
+		param1 = params.fetch('parameter1')
+		param2 = params.fetch('parameter2')
+		param3 = params.fetch('parameter3')
+		param4 = params.fetch('parameter4')
+		param5 = params.fetch('parameter5')
+		param6 = params.fetch('parameter6')
+		modifier = ModifyAlgorithms.new()
+		modifier.modifyAlgorithms(param1,param2,param3,param4,param5,param6)
 	end
 end
