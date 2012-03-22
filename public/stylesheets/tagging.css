@@ -103,13 +103,18 @@ h4.locationLable{
 }
 input.tagInputField{
 	margin-top:4px;
-	margin-right:20px;
+	margin-right:15px;
 	clear:left;
 	float:left;
-	width:120px;
+	width:102px;
+	margin-bottom:
 }
 div.hidden{
 	display:none!important;
+}
+.commitButton{
+	margin-left:0px;
+	margin-right:15px;
 }
 .fillParent{
 	width:100%;
