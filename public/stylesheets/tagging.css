@@ -161,5 +161,8 @@ li.tagItem{
 	float:left;
 	padding:5px;
 	margin-right:20px;
-	background-color:
+	background-color:#FFC0C0;
+}
+li.selected{
+	background-color:#99CC99;
 }

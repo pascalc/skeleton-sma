@@ -26,10 +26,16 @@ function hideInfo(postID) {
     element.addClass('hidden');
     $('#'+'shortInfo' + postID).removeClass('selected');
 }
-function hideTag(postID,index){
+function clickTag(postID,index){
     var element=$('#postTags'+postID);
-    element.children("#tagItemIndex"+index).css('color','#FF0000').fadeOut('slow',function () 
-{element.children("#tagItemIndex"+index).remove();});
+    if(element.children("#tagItemIndex"+index).hasClass('selected')){
+        element.children("#tagItemIndex"+index).removeClass('selected');
+    }
+    else{
+        element.children("#tagItemIndex"+index).addClass('selected');
+    }
+    //element.children("#tagItemIndex"+index).css('color','#FF0000').fadeOut('slow',function () 
+//{element.children("#tagItemIndex"+index).remove();});
 }
 function addTag(postID){
     var element=$('#postTags'+postID);
@@ -41,11 +47,25 @@ function addTag(postID){
     $('#tagInput'+postID).css('background-color','#FFFFFF');
     var count = $('ul#postTags'+postID+' li').length;
 
-    element.append('<li id ="tagItemIndex'+count+'" onClick="hideTag('+postID+','+count+')" class="tagItem">'+tag+ '</li>');
+    
+
+    tags = tag.split(' ');
+    for(i = 0;i<tags.length;i++){
+        if(tags[i] != ''){
+            if(i==0){
+                tag = tags[i];
+            }
+            else{
+            tag = tag + "-" + tags[i];
+            }
+        }
+    }
+
+    element.append('<li id ="tagItemIndex'+count+'" onClick="clickTag('+postID+','+count+')" class="tagItem selected">'+tag+ '</li>');
 
 
 
-    $('#tagItemIndex'+count).hide().css('color','#00CC33').fadeIn('slow');
+    $('#tagItemIndex'+count).hide().fadeIn('slow');
     
     setTimeout(function() {
              $('#tagItemIndex'+count).stop().animate({'color': '#444'}, 1000).css('color', '#444');}, 1500);
@@ -70,7 +90,7 @@ function commit(postID) {
 
     for (var i =0;i<=numberOfTags;i=i+1){
 
-        if($('ul#postTags'+postID+' li:nth-child('+i+')').is(":visible")){
+        if($('ul#postTags'+postID+' li:nth-child('+i+')').hasClass('selected')){
             if(i==1){
             tagsString = tagsString+$('ul#postTags'+postID+' li:nth-child('+i+')').text();
             }

@@ -53,10 +53,7 @@
 
 		<ul id="postTags{{_id}}" class="tagsUL">
 		{{#dummydata}}
-			<li id ="tagItemIndex{{index}}" onClick="hideTag({{_id}},{{index}})" class="tagItem selected">
-
-			{{tags}}
-			</li>
+			<li id ="tagItemIndex{{index}}" onClick="clickTag({{_id}},{{index}})" class="tagItem selected">{{tags}}</li>
 		{{/dummydata}}
 		</ul>
 
