@@ -9,14 +9,14 @@
 			<label for="limit">Select how many messeges to show</label>
   			<select name="limit" class="customTaggingSelector">
 				{{#limit}}
-				<option value="{{n}}">{{n}}</option>
+				<option id = "number{{n}}" value="{{n}}">{{n}}</option>
 				{{/limit}}
   			</select>
 			</div>
-			{{#selected}}<div onload="happycode();" class="hidden"id="selected">{{number}}</div>{{/selected}}
+			{{#selected}}<div class="hidden"id="selectedNumber">{{number}}</div>{{/selected}}
 			<div class="filterDiv" >
 				<label for="filter">Write comma-seperated tags for filter</label>
-				<input name="filter" type="text"  class="filterInputField">
+				<input name="filter" type="text" class="filterInputField">
 			</div>
 		</form>
 		</div>

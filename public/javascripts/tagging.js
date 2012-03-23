@@ -1,9 +1,8 @@
 var lastPostID;
-
-function happycode() {
-    var selected= $('#selected').text();
-    alert(selected);
-}
+$(document).ready(function() {
+  var number = $("#selectedNumber").html();
+  $('#number'+number).attr("selected","selected");
+});
 
 function showInfo(postID) {
     var element=  $('#'+'details' + postID);
@@ -88,11 +87,12 @@ function commit(postID) {
     var numberOfTags = $('ul#postTags'+postID+' li').length;
     var tagsString = '';
 
+    var first = true;
     for (var i =0;i<=numberOfTags;i=i+1){
-
         if($('ul#postTags'+postID+' li:nth-child('+i+')').hasClass('selected')){
-            if(i==1){
+            if(first){
             tagsString = tagsString+$('ul#postTags'+postID+' li:nth-child('+i+')').text();
+            first = false;
             }
             else{
             tagsString = tagsString+','+$('ul#postTags'+postID+' li:nth-child('+i+')').text();
