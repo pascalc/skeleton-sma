@@ -30,6 +30,10 @@ class ResultsController < ApplicationController
 		@messages = retriever.RetrieveClassificationObjects(count,@filters)
 		mustache :results
 	end
+	#this is temporary solution until result form provides dual button submits
+	get '/results/static' do
+		mustache :static_graph
+	end
 
 	get '/results/edit' do
 		mustache :edit_algorithms
