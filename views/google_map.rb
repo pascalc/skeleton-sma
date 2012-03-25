@@ -1,6 +1,6 @@
 class ApplicationController
     module Views
-	class StaticGraph < Mustache
+	class GoogleMap < Mustache
             def tags
                 @tags
             end

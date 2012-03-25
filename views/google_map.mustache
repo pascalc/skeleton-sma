@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="../../stylesheets/google_map.css">
+
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>		
+<script src="../../javascripts/google_map.js"></script>
+
+<div class="container">
+	<div class="tagsWrapper">
+		<form method="post" action="../results/google-map">
+			<button  type="submit" id="updateData">Update map data</button>
+			<div class="filterDiv">
+				<label for="filter">Write comma-seperated tags for filter</label>
+				<input id="tags" name="filter" type="text"  class="filterInputField"></input>
+			</div>
+		</form>
+	</div>
+	<div class="map">
+	</div>
+</div>
