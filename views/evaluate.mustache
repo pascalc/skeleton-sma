@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<link rel="stylesheet" href="../../stylesheets/evaluate.css">		
+<link rel="stylesheet" href="../../stylesheets/evaluate.css">
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>		
 <script src="../../javascripts/evaluate.js"></script>
 <div class="container">
 		<div class="topEvaluateWrapper">
@@ -15,12 +16,13 @@
 			</div>
 			<div class="filterDiv" >
 				<label for="filter">Write comma-seperated tags for filter</label>
-				<input name="filter" type="text"  class="filterInputField">
+				<input name="filter" type="text"  class="filterInputField" value="{{keywords}}">
 			</div>
 		</form>
 		<a href="../../evaluate/edit" class="button">Edit Algorithms</a>
+		<p id="start-button" class="button">Start Stream</p>
 		</div>
-        	<table class="five columns alpha evaluateMsg">
+        	<table id="stream" class="five columns alpha evaluateMsg">
 			<tr class="partialContainer top">
 				<td class="message">Messages</td>
 			</tr>
