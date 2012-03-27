@@ -200,7 +200,7 @@ function loaddata() {
 	
 	var url = "thresholds="+filters+"&start_time="+ parseInt(getstartdate()) +"&end_time="+ parseInt(getenddate())+"&limit=1000";
 	
-	$.getJSON('localhost/result/data?path=' + url, function(data) {
+	$.getJSON('../data?' + url, function(data) {
 		var tweets = JSON.parse(data);
 		showtweets(tweets);
 	});
