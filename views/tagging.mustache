@@ -6,7 +6,7 @@
 		<form method="post" action="../../tagging/limit">
 		<button  type="submit" id="getNewMsg">Get fresh list</button>
 			<div class = "limitWrapper">		
-			<label for="limit">Select how many messeges to show</label>
+			<label for="limit">Select how many messages to show</label>
   			<select name="limit" class="customTaggingSelector">
 				{{#limit}}
 				<option id = "number{{n}}" value="{{n}}">{{n}}</option>
@@ -14,8 +14,8 @@
   			</select>
 			</div>
 			{{#selected}}<div class="hidden"id="selectedNumber">{{number}}</div>{{/selected}}
-			<div class="filterDiv" >
-				<label for="filter">Write comma-seperated tags for filter</label>
+			<div class="filterDiv" id="tweetFilter">
+				<label for="filter">Write comma-separated tags for filter</label>
 				<input name="filter" type="text" class="filterInputField">
 			</div>
 		</form>
@@ -52,9 +52,9 @@
 		<div class="six columns alpha tags">
 
 		<ul id="postTags{{_id}}" class="tagsUL">
-		{{#dummydata}}
+		{{#tagarray}}
 			<li id ="tagItemIndex{{index}}" onClick="clickTag({{_id}},{{index}})" class="tagItem selected">{{tags}}</li>
-		{{/dummydata}}
+		{{/tagarray}}
 		</ul>
 
 		</div>

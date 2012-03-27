@@ -37,15 +37,14 @@ class TaggingController < ApplicationController
 						
 		@tags = HTTParty.get('http://nosy.pspace.se:8888/corpus/tags')
 
-
-		puts @tags
-		@rehashedTags = {'tags' => []}
-		@rehashedTags['tags'].push(Hash[@tags['tags'].collect { |v|    ['tag', v]}])
-		#puts @tags['tags'].collect{|x| hash['TAGS']=x}
-		#@tags['tags'].each{|x| @rehashedTags['tags'].push()}
-		puts @rehashedTags
-
-
+		a = Array.new
+		i = 0
+		
+		@tags['tags'].each do |item|
+			a[i] = Hash[:tags,item,'index',i]
+			i = i+1
+		end
+		@tags = a
 		mustache :tagging
 	end
 	get '/tagging/:limit' do

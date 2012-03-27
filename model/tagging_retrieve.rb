@@ -3,8 +3,6 @@ require 'httparty'
 
 class Retrieve
     def RetrieveClassificationObjects(limit1,filter)
-
-	
 	if(filter.strip.empty?)
 		jsonArray = HTTParty.get("http://nosy.pspace.se:8888/corpus?limit=#{limit1}")
 		puts "@filters was empty"

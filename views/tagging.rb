@@ -17,7 +17,11 @@ class ApplicationController
                 @messages
             end
             
-            def initdummydata
+	    def tagarray
+                @tags
+            end
+            
+	    def initdummydata
                 @dummydata = [{:tags => 'dummy'},{:tags => 'placeholder'},{:tags => 'textdata'},{:tags => 'Test'}]
 
 
@@ -26,9 +30,7 @@ class ApplicationController
 			item.store('index', index)
 		end
             end
-            def dummydata
-                @dummydata
-            end
+            
 
         end
     end
