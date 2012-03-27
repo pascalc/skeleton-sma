@@ -17,7 +17,7 @@ class UserController < ApplicationController
 	end
 
 	# Edit a user
-	put '/user' do
+	put '/user' do 
 		"Creates a user"
 	end
 
