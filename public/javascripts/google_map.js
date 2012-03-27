@@ -198,9 +198,12 @@ function loaddata() {
 	}
 	filters = filters + "%7D";
 	
-	var url = "thresholds="+filters+"&start_time="+ parseInt(getstartdate()) +"&end_time="+ parseInt(getenddate())+"&limit=1000";
+	var parameters = "thresholds="+filters+"&start_time="+ parseInt(getstartdate()) +"&end_time="+ parseInt(getenddate())+"&limit=1000";
 	
-	$.getJSON('../data?' + url, function(data) {
+	var url = '../results/data?';
+	url = url.concat(parameters);
+	alert(url);
+	$.getJSON(url, function(data) {
 		var tweets = JSON.parse(data);
 		showtweets(tweets);
 	});

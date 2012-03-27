@@ -59,7 +59,7 @@ class ResultsController < ApplicationController
 		modifier.modifyAlgorithms(param1,param2,param3,param4,param5,param6)	
 	end
 
-	get '/results/data' do
+	get '/results/data?' do
 		puts params
 	end
 
