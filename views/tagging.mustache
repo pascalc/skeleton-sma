@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="../../stylesheets/tagging.css">
+<script src="../../javascripts/tagging.js"></script>
+<div class="container">
+		<div class="topTaggerWrapper">
+		<form method="post" action="../../tagging/limit">
+		<button  type="submit" id="getNewMsg">Get fresh list</button>
+			<div class = "limitWrapper">		
+			<label for="limit">Select how many messeges to show</label>
+  			<select name="limit" class="customTaggingSelector">
+				{{#limit}}
+				<option value="{{n}}">{{n}}</option>
+				{{/limit}}
+  			</select>
+			</div>
+			{{#selected}}<div onload="happycode();" class="hidden"id="selected">{{number}}</div>{{/selected}}
+			<div class="filterDiv" >
+				<label for="filter">Write comma-seperated tags for filter</label>
+				<input name="filter" type="text"  class="filterInputField">
+			</div>
+		</form>
+		</div>
+        	<div class="six columns alpha taggingMsg marginBot">
+			<table id="table" class="fillParent">
+			<tr class="messageContainer top">
+				<caption ><b>Message overview</b></caption>
+			</tr>
+
+			{{#messages}}
+				<tr id="shortInfo{{_id}}" onCLick="showInfo('{{_id}}');"class="messageContainer messageItem">
+        			<td class="proseven">{{text}}</td><td class="">{{created_at}}</td>
+				</tr>
+			{{/messages}}
+			</table>
+		{{#initdummydata}}{{/initdummydata}}
+		</div>
+		{{#messages}}
+		<div class="hidden ten columns omega fixedPosition" id = "details{{_id}}">
+
+		<h3>Source: {{source}}</h3>
+		<h4 class="textLable">Text: </h4>
+		<h4 class="text gray">{{text}}</h4>
+		{{#author}}
+		<h4 class="postedLable">Posted by: </h4>
+		<h4 class="text gray">{{author}}</h4>
+		{{/author}}
+
+		{{#location}}
+		<h4 class="locationLable">Location: </h4>
+		<h4 class="text gray">{{location}}</h4>
+		{{/location}}
+		<div class="six columns alpha tags">
+
+		<ul id="postTags{{_id}}" class="tagsUL">
+		{{#dummydata}}
+			<li id ="tagItemIndex{{index}}" onClick="hideTag({{_id}},{{index}})" class="tagItem">{{tags}}</li>
+		{{/dummydata}}
+		</ul>
+
+		</div>
+
+		<div class="omega floatLeft">
+		<div>
+			<input type="text" id="tagInput{{_id}}" class="tagInputField">
+			<button onClick="addTag({{_id}})" id="addTagg" class="tagInputButton">Add Tag</button>
+		</div>
+		<div>
+			<button onClick="discard({{_id}})" id="discardItem" class="discardButton">Discard</button>
+			<button onClick="commit({{_id}})" id="commitTagging" class="commitButton">Commit Tagging</button>
+		</div>
+
+		</div>
+
+		</div>
+		{{/messages}}
+</div>
+
