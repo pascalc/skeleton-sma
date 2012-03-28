@@ -94,11 +94,15 @@ function showtweets(tweets) {
     var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 	var fluster = new Fluster2(map);
 	for (var tweet in tweets) {
-		var pos = [
-			tweets[tweet].location.latitude,
-			tweets[tweet].location.longitude
-		];
-		
+		var pos;
+		if(tweets[tweet].location != null){
+			pos = [
+				tweets[tweet].location.latitude,
+				tweets[tweet].location.longitude
+			];
+		}else{
+			continue;
+		}
 		// Create a new marker. Don't add it to the map!
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(pos[0], pos[1]),
@@ -146,7 +150,7 @@ function testshow() {
 	}); 
 
 	var json = eval('[{"tags": {"urgent": 0.771315707632916, "aliens": 0.5649242852530021, "apocalypse": 0.5664557596363734, "earthquake": 0.8894778638330588, "english": 1.0}, "text": "Males dah", "created_at": "Sun Mar 25 14:16:40 +0000 2012", "author": "Cipunggg", "stemmed_keywords": ["male", "dah"], "source": "twitter", "last_modified": "2012-03-25T14:16:55.499000", "location": {"latitude": 59.61659112799895, "longitude": 18.229280821069082}, "keywords": ["males", "dah"], "new": false, "_id": 2616}, {"tags": {"earthquake": 0.4322820439952907, "apocalypse": 0.8451985361175953, "zombies": 0.15264410983766685, "wtf": 0.23642706753627074, "english": 1.0}, "text": "morning", "created_at": "Sun Mar 25 14:16:39 +0000 2012", "author": "karooolcardoso", "stemmed_keywords": ["morn"], "source": "twitter", "last_modified": "2012-03-25T14:16:54.659000", "location": {"latitude": 59.713494515346774, "longitude": 18.217634745270942}, "keywords": ["morning"], "new": false, "_id": 2615}]');
-	//showtweets(json);
+	showtweets(json);
 }
 
 function createXHR(){
