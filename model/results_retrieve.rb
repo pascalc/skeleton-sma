@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'httparty'
+require 'net/http'
 
 class ResultsRetrieve
   def RetrieveClassificationObjects(limit1,filter)
@@ -14,9 +15,8 @@ class ResultsRetrieve
     end
     return jsonArray      
   end
-  def RetrieveJSON(path)
-    url = 'http://nosy.pspace.se:7777/classify?'
-    url.concat(path)
-    jsonArray = HTTParty.get(url)
+  def RetrieveJSON(filter, startTime, endTime, limit1)
+    jsonArray = HTTParty.get("http://nosy.pspace.se:7777/classify?thresholds=#{filter}&start_time=#{startTime}&end_time=#{endTime}&limit=#{limit1}")
+    return jsonArray
   end
 end

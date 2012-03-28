@@ -1,7 +1,7 @@
 require_relative 'application_controller'
 require_relative '../model/results_retrieve.rb'
 require_relative '../model/modify_algorithms.rb'
-
+require 'json'
 
 class ResultsController < ApplicationController
 
@@ -60,7 +60,18 @@ class ResultsController < ApplicationController
 	end
 
 	get '/results/data?' do
-		puts params
+		content_type :json
+		retriever = ResultsRetrieve.new()
+		thresholds = params[:thresholds]
+		thresholds = thresholds.gsub('"','%22')
+		thresholds = thresholds.gsub('{','%7B')
+		thresholds = thresholds.gsub('}','%7D')
+		startTime = params[:start_time]
+		endTime = params[:end_time]
+		limit = params[:limit]
+		jsonArray = retriever.RetrieveJSON(thresholds,startTime,endTime,limit)
+		puts jsonArray
+		jsonArray.to_json
 	end
 
 	def filterFunction(filter)
