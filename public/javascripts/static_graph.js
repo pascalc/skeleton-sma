@@ -4,13 +4,14 @@
  * based on 5.4.3.5 in ADD.
  */
 
-var staticGraph = {
-
+var staticGraph = 
+{
   // -function isOutOfDefault-
   // Checks if new time scope is out of default or not.
-  isOutOfDefault : function (inputStartTime, inputEndTime, defaultStartTime, defaultEndTime) {
+  isOutOfDefault : function (inputStartTime, inputEndTime, defaultStartTime, defaultEndTime) 
+  {
     // return false if either startTime or endTime is out of scope.
-    if(inputStartTime < defaultStartTime || defaultEndTime < inputEndTime)
+    if (inputStartTime < defaultStartTime || defaultEndTime < inputEndTime)
       return false;
     else
       return true;
@@ -18,55 +19,70 @@ var staticGraph = {
   
   // -function getData-
   // Gets data from database based on current selected tags and stores them to "taggedDatasets"
-  getData : function (selectedTags, startTime, endTime) {
+  getData : function (selectedTags, startTime, endTime) 
+  {
     var taggedDatasets = [];    // main array
     var newDate;
     var milliDate;              // Date has to be converted in format of milliseconds
-    
+    var filters;                // filter for tags
+
     // class for taggedDatasets
-    function taggedObject(tagName) {
+    function taggedObject (tagName) 
+    {
       this.tagName = tagName;
       this.timeArray = new Array;
     }
-
+    
     // we might have to get datasets for multiple tags
-    for (var i = 0; i < selectedTags.length; i++) {     // can we get the number of tags with this???
-      taggedDatasets[i] = new taggedObject(selectedTags[i]);
+    for (var i = 0; i < selectedTags.length; i++)
+    {
+      taggedDatasets[i] = new taggedObject (selectedTags[i]);
+    	filters = "%7B" + "%22" + selectedTags[i] + "%22:0.9" + "%7D";
 
+      /* if multiple tags are combined...
+      for (var j in tagarray) {
+    		filters = filters + "%22" + tagarray[j] + "%22:0.9";
+     	}   	
+     	filters = filters + "%7D";
+     	*/
+      	
+     	var parameters = "thresholds=" + filters + "&start_time=" + parseInt (startTime / 1000)
+     	    + "&end_time=" + parseInt (endTime / 1000) + "&limit=1000";
+      	
+     	var url = "../results/data?";
+     	url = url.concat (parameters);
+      alert(url);
+      // send a HTTP GET request to the classifier server to get the data      
+     	var request = $.ajax(
+     	{
+     		type: "GET",
+     		url: url,
+     		datatype: "json",
+		success: function (data) 
+     		{
+     			alert("success");
+     			
+			for (var j = 0; j < data.length; j++) 
+			{  
+				// convert date
+				//var myDate = new Date("2012-02-10T13:19:11+0000");
+				newDate = new Date (data.date_created);
+				milliDate = newDate.getTime();
 
-// test
-      var parameters = "thresholds="+0.9+"&start_time="+ startTime +"&end_time="+ endTime+"&limit=1000";  
-      var url = '../results/data?';
-      url = url.concat(parameters);
-      //alert(url);
-      $.getJSON(url, function(data) {
-   //     var tweets = JSON.parse(data);
-   //     showtweets(tweets);
-   //   });
+				//var offset = myDate.getTimezoneOffset() * 1000;
+				//var withOffset = myDate.getTime();
+				//var withoutOffset = withOffset - offset;
 
-      // send a HTTP GET request to the classifier server to get the data
-    //  $.getJSON("../results/data?",
-                  // address which includes data
-     //   {thresholds: selectedTags[i], start_time: startTime / 1000, end_time: endTime / 1000},
-     //   function (data) {
-
-          for (var j = 0; j < data.length; j++) {            
-            // convert date
-            //var myDate = new Date("2012-02-10T13:19:11+0000");
-            newDate = new Date(data.date_created);
-            milliDate = newDate.getTime();
-            
-            //var offset = myDate.getTimezoneOffset() * 1000;
-            //var withOffset = myDate.getTime();
-            //var withoutOffset = withOffset - offset;
-         
-            taggedDatasets[i].timeArray.push(milliDate);
-          }
-        },
-        "json");
-
+				taggedDatasets[i].timeArray.push (milliDate);
+			}
+    		},
+    		error: function (dammy, text, thrown) 
+    		{ 
+    		  alert ("error");
+    		  // alert (thrown);
+    		}
+     	});
     }
-
     return taggedDatasets;
   },
   
@@ -74,24 +90,27 @@ var staticGraph = {
   // -function setPlotArray-
   // Separates current time scope to "seprateNumber" time scope, and in each time scope, the number
   // and the percentage of tweets in "taggedDatasets are calculated and stored to "plotArray"
-  setPlotArray : function (datasets, totalTweet, separateNumber, startTime, endTime) {
+  setPlotArray : function (datasets, totalTweet, separateNumber, startTime, endTime) 
+  {
     var currentNumber;  
     var plotArray = [];          // main array
     
     // separate time array
     var separatedTime = [];
     
-    var interval = Math.round( (endTime - startTime) / separateNumber);
+    var interval = Math.round ( (endTime - startTime) / separateNumber);
     
     // the number of elements of this array should be same as separateNumber + 1
-    for (var i = 0; i < separateNumber; i++) {
+    for (var i = 0; i < separateNumber; i++) 
+    {
       separatedTime.push (startTime + i * interval );
     }
-    separatedTime.push(endTime);      // in order to avoid ignoring endTime because of rounding
+    separatedTime.push (endTime);      // in order to avoid ignoring endTime because of rounding
     var dammyStart = startTime - interval;    // for the result of the first element
     
     // class for inside array
-    function plotObject (tagName) {
+    function plotObject (tagName) 
+    {
       this.tagName = tagName;
       this.number = new Array;
       //this.percent = new Array;
@@ -99,45 +118,48 @@ var staticGraph = {
     
     //for (var a = 0; a < separatedTime.length; a++) alert(separatedTime[a]);
     
-    for (var i = 0, i_len = datasets.length; i < i_len; i++) {      // for number of tags
-      plotArray[i] = new plotObject(datasets[i].tagName);           // name of tag
+    for (var i = 0, i_len = datasets.length; i < i_len; i++)      // for number of tags
+    {
+      plotArray[i] = new plotObject (datasets[i].tagName);           // name of tag
         
       // j : for timeArray
       // k : for separatedTime
       var j_len = datasets[i].timeArray.length;
       
       // first check time before dammyStart
-      for (var j = 0; j < j_len; j++) {
+      for (var j = 0; j < j_len; j++) 
+      {
         if (dammyStart <= datasets[i].timeArray[j]) break;
       }
       
-      for (var k = 0; j < j_len, k < separateNumber + 1; k++) {
-        
+      for (var k = 0; j < j_len, k < separateNumber + 1; k++) 
+      {   
         // initialization
-        currentNumber = 0;
-          
-        if (datasets[i].timeArray[j] < separatedTime[k]) {
+        currentNumber = 0;  
+        if (datasets[i].timeArray[j] < separatedTime[k]) 
+        {
           currentNumber++;
           j++;
-          //alert(currentNumber)
-          if (j < j_len) {
-            while (datasets[i].timeArray[j] < separatedTime[k]) {
+          if (j < j_len) 
+          {
+            while (datasets[i].timeArray[j] < separatedTime[k]) 
+            {
               currentNumber++;
               j++;
               if (j_len <= j) break;
             }
           }
-          plotArray[i].number.push([separatedTime[k], currentNumber]);        // number
+          plotArray[i].number.push ([separatedTime[k], currentNumber]);        // number
           //plotArray[i].percent.push([separatedTime[k], currentNumber / 10000]);    // percent
-        }
-        else {
-          plotArray[i].number.push([separatedTime[k], 0]);
+        } else {
+          plotArray[i].number.push ([separatedTime[k], 0]);
         }
 
       }
       // if all separatedTime hasn't been considered
-      while (k < separateNumber + 1) {
-        plotArray[i].number.push([separatedTime[k], 0]);
+      while (k < separateNumber + 1) 
+      {
+        plotArray[i].number.push ([separatedTime[k], 0]);
         //plotArray[i].percent.push([separatedTime[k], 0]);
         k++;
       }
@@ -149,17 +171,19 @@ var staticGraph = {
   
   // -function drawStaticGraph-
   // Draws data in "plotArray" onto the graph.
-  drawStaticGraph : function (array) {
+  drawStaticGraph : function (array) 
+  {
   //drawStaticGraph : function(array, isShowNum, isShowPercent) {
-    $(function () {
-      
+    $(function () 
+    {  
       // first correct the timestamps - they are recorded as the daily
       // midnights in UTC+0100, but Flot always displays dates in UTC
       // so we have to add one hour to hit the midnights in the plot
       //for(var i = 0; i < d.length; ++i)
       //d[i][0] += 60 * 60 * 1000;
       // helper for returning the weekends in a period
-      function weekendAreas (axes) {
+      function weekendAreas (axes) 
+      {
         var markings = [];
         var d = new Date (axes.xaxis.min);
         // go to the first Saturday
@@ -168,40 +192,49 @@ var staticGraph = {
         d.setUTCMinutes (0);
         d.setUTCHours (0);
         var i = d.getTime ();
-        do {
+        do 
+        {
           // when we don't set yaxis, the rectangle automatically
           // extends to infinity upwards and downwards
-          markings.push ({
-            xaxis : {
+          markings.push (
+          {
+            xaxis : 
+            {
               from : i,
               to : i + 2 * 24 * 60 * 60 * 1000
             }
           });
           i += 7 * 24 * 60 * 60 * 1000;
         } while (i < axes.xaxis.max);
-         return markings;
+        return markings;
       }
       // for first plot
-      var options = {
-        xaxis : {
+      var options = 
+      {
+        xaxis : 
+        {
           mode : "time",
           tickLength : 5
         },
-        selection : {
+        selection : 
+        {
           mode : "x"
         },
-        yaxes : [ { min : 0 },
-         {
-          position: "right"
-         }],
-        grid : {
+        yaxes : 
+        [
+          { min : 0 },
+          { position: "right" }
+        ],
+        grid : 
+        {
           markings : weekendAreas
         }
       };
       
       // convert for plot format
       var data = [];
-      for (var m = 0; m < array.length; m++) {
+      for (var m = 0; m < array.length; m++) 
+      {
       //  if (isShowNum) 
           data.push ({ data: array[m].number, label: array[m].tagName + ": Number"});
       //  if (isShowPercent)
@@ -212,9 +245,12 @@ var staticGraph = {
       var plot = $.plot ($("#placeholder"), data, options);
       
       // zooming
-      $("#placeholder").bind("plotselected", function (event, ranges) {
-        plot = $.plot ($("#placeholder"), data, $.extend (true, {}, options, {
-          xaxis : {
+      $("#placeholder").bind ("plotselected", function (event, ranges) 
+      {
+        plot = $.plot ($("#placeholder"), data, $.extend (true, {}, options, 
+        {
+          xaxis : 
+          {
             min : ranges.xaxis.from,
             max : ranges.xaxis.to
           }
@@ -226,11 +262,22 @@ var staticGraph = {
   // -function staticGraph-
   // main function for displaying static graph.
 
-  displayStaticGraph : function() {
+  displayStaticGraph : function() 
+  {
 
     // These parameters can be changed.------------------------------
-    var defaultStartTime = 1326463600000;       // default start time
-    var defaultEndTime =   1326863600000;         // default end time
+    
+    // time is in millisecond
+    // var defaultStartTime = 1326463600000;       
+    // var defaultEndTime =   1326863600000;        
+    // default start time and end time
+    var dateDammy1 = new Date ();
+    var dateDammy2 = dateDammy1.getTime ();
+    var defaultStartTime = dateDammy2 - 7 * 24 * 3600 * 1000;
+    var defaultEndTime = dateDammy2;
+    //alert (defaultEndTime);
+    //alert (defaultStartTime);
+    
     var separateNumber = 100;                    // interval of time
     //var isShowNum = true;
     //isShowPercent = true;
@@ -242,8 +289,27 @@ var staticGraph = {
     var plotArray, taggedDatasets;
     var totalTweetsArray = 100;         // now dammy
     
+    // initial time for calendar
+    var initialStartYear = new Date ();
+    var initialStartMonth = new Date ();
+    var initialStartDate = new Date ();
+    initialStartYear.getYear ();
+    initialStartMonth.getMonth ();
+    initialStartDate.getDate ();
+    var initialEndYear = new Date ();
+    var initialEndMonth = new Date ();
+    var initialEndDate = new Date ();
+    initialEndYear.getYear ();
+    initialEndMonth.getMonth ();
+    initialEndDate.getDate ();
+    
+    var calendarInitialStartTime = 
+        parseInt (String (initialStartYear) + String (initialStartMonth) + String (initialStartDate));
+    var calendarInitialEndTime = 
+        parseInt (String (initialEndYear) + String (initialEndMonth) + String (initialEndDate));
     // for test   
-    taggedDatasets = [
+    taggedDatasets = 
+    [
       {"tagName": "Tsunami",
         "timeArray": [1326463600000, 1326463600000, 1326463600000, 1326763600000, 1326863600000,
           1326863610000, 1326863620000, 1326863630000, 1326863640000, 1326863650000,
@@ -261,64 +327,128 @@ var staticGraph = {
     ];
 
 
+/*
     // maybe we will show the default data first?
-    // taggedDatasets = this.getData(selectedTags, startTime, endTime);
+    taggedDatasets = this.getData(selectedTags, startTime, endTime);
     plotArray = this.setPlotArray(taggedDatasets, totalTweetsArray, separateNumber, startTime, endTime);
     this.drawStaticGraph(plotArray);
+*/
+
 
     // when new tags are selected
     // Also, when this function is called first, first tags should be specified.
-    $("#tagSelected-box").change(function() {           // if the tags are changed and entered
+    $("#tagSelected-box").change (function ()           // if the tags are changed and entered
+    {
       selectedTags = ($("#tagSelected-box").val());
-      if (selectedTags.match(/\S/g)) {     // space check with regular expression
-        selectedTags = selectedTags.split(",");       // split with comma and store to array
-        
-        //taggedDatasets = staticGraph.getData(selectedTags, startTime, endTime);        // get new data
-        plotArray = staticGraph.setPlotArray(taggedDatasets, totalTweetsArray, separateNumber, startTime, endTime);
-        staticGraph.drawStaticGraph(plotArray);
+      if (selectedTags.match(/\S/g))     // space check with regular expression
+      {
+        selectedTags = selectedTags.split (",");       // split with comma and store to array
+        taggedDatasets = staticGraph.getData (selectedTags, startTime, endTime);        // get new data
+        plotArray = staticGraph.setPlotArray (taggedDatasets, totalTweetsArray, separateNumber, startTime, endTime);
+        staticGraph.drawStaticGraph (plotArray);
         //this.drawStaticGraph(plotArray, isShowNum, isShowPercent);
       }
     });
 
      // calendar setup
-    var startCal = Calendar.setup({
+    var startCal = Calendar.setup(
+    {
       cont       : "start-calendar-container",
       inputField : "start-calendar-input",
       //trigger    : "start-calendar-trigger",
       showTime : true,
-      //selection  : [20090527],      // initialize
-      //min : // minimum date
-      //max : // maximum date
+      selection  : [calendarInitialStartTime],      // initialize
+      min : 20070101, // minimum date
+      max : 20201231,// maximum date
       dateFormat : "%s",  // format of date
       //timePos :     // position of time
       //time :   // initial time        
+
       // event when date is changed
-      onSelect   : function() {
-                
+      onSelect   : function () {                
         // get new startTime
-        var tmp = this.selection.get();
-        tmp = Calendar.intToDate(tmp);
-        tmp = Calendar.printDate(tmp, "%s");
+        var tmp = this.selection.get ();
+        tmp = Calendar.intToDate (tmp);
+        tmp = Calendar.printDate (tmp, "%s");
         startTime = tmp * 1000;
-        
+    	    
         // for displaying
-        
-        var date = this.selection.get();
-        date = Calendar.intToDate(date);
-        date = Calendar.printDate(date, "%A, %B %d, %Y");
-        var ta = document.getElementById("start-calendar-input");
-        ta.value = date; 
-        
-                 
-        var tempEnd = ($("#end-calendar-input").val());   // get the value of input of end calendar
-        if (tempEnd.match(/\S/g)) {                 // space check with regular expression
-        
-          if (!(startTime < endTime)) {
+        var date = this.selection.get ();
+        date = Calendar.intToDate (date);
+        date = Calendar.printDate (date, "%A, %B %d, %Y");
+        var ta = document.getElementById ("start-calendar-input");
+        ta.value = date;             
+        var tempEnd = ($("#end-calendar-input").val ());   // get the value of input of end calendar
+        if (tempEnd.match(/\S/g)) // space check with regular expression
+        {
+          if (!(startTime < endTime)) 
+          {
             alert ("Enter startTime < endTime");
-          }
-          else {
+          } else {
             // if new time scope is outside of default time scope
-            if (staticGraph.isOutOfDefault (startTime, endTime, defaultStartTime, defaultEndTime) ) {
+            if (staticGraph.isOutOfDefault (startTime, endTime, defaultStartTime, defaultEndTime) ) 
+            {
+              //taggedDatasets = staticGraph.getData(selectedTags, startTime, endTime);
+              defaultStartTime = startTime;
+              defaultEndTime = endTime;
+            }           
+            plotArray = staticGraph.setPlotArray (taggedDatasets, totalTweetsArray, separateNumber, startTime, endTime);
+            staticGraph.drawStaticGraph (plotArray);
+            //this.drawStaticGraph(plotArray, isShowNum, isShowPercent);
+          }
+        }
+      },
+       // event when time is changed
+      onTimeChange : function () 
+      {
+        var hours = this.getHours();
+        var minutes = this.getMinutes();  
+        // for displaying
+        /*
+        var time = hours + " : " + minutes;
+        var tibx = document.getElementById("start-calendar-time");
+        tibx.value = time;
+        */
+      }
+    });
+    
+    var endCal = Calendar.setup(
+    {
+      cont       : "end-calendar-container",
+      inputField : "end-calendar-input",
+      //trigger    : "end-calendar-trigger",
+      showTime : true,
+      selection  : [calendarInitialEndTime],      // initialize
+      min : 20070101,// minimum date
+      max : 20201231,// maximum date
+      dateFormat : "%s",  // format of date
+      //timePos :     // position of time
+      //time :   // initial time
+              
+      // event when date is changed
+      onSelect   : function() 
+      {          
+        // get new startTime
+        var tmp = this.selection.get ();
+        tmp = Calendar.intToDate (tmp);
+        tmp = Calendar.printDate (tmp, "%s");
+        endTime = tmp * 1000;
+        
+        // for displaying  
+        var date = this.selection.get ();
+        date = Calendar.intToDate (date);
+        date = Calendar.printDate (date, "%A, %B %d, %Y");
+        var ta = document.getElementById ("end-calendar-input");
+        ta.value = date;                  
+        var tempStart = ($("#start-calendar-input").val ());   // get the value of input of start calendar
+        if (tempStart.match (/\S/g)) {                 // space check with regular expression
+          if ( !(startTime < endTime) ) 
+          {
+            alert ("Enter startTime < endTime");
+          } else {
+            // if new time scope is outside of default time scope
+            if (staticGraph.isOutOfDefault (startTime, endTime, defaultStartTime, defaultEndTime)) 
+            {
               //taggedDatasets = staticGraph.getData(selectedTags, startTime, endTime);
               defaultStartTime = startTime;
               defaultEndTime = endTime;
@@ -331,74 +461,10 @@ var staticGraph = {
         }
       },
        // event when time is changed
-      onTimeChange : function () {
+      onTimeChange : function () 
+      {  
         var hours = this.getHours();
-        var minutes = this.getMinutes();
-        
-        // for displaying
-        /*
-        var time = hours + " : " + minutes;
-        var tibx = document.getElementById("start-calendar-time");
-        tibx.value = time;
-        */
-      }
-    });
-    
-    var endCal = Calendar.setup({
-      cont       : "end-calendar-container",
-      inputField : "end-calendar-input",
-      //trigger    : "end-calendar-trigger",
-      //titleFormat : "End Time",
-      showTime : true,
-      //selection  : [20090527],      // initialize
-      //min : // minimum date
-      //max : // maximum date
-      dateFormat : "%s",  // format of date
-      //timePos :     // position of time
-      //time :   // initial time        
-      // event when date is changed
-      onSelect   : function() {
-                
-        // get new startTime
-        var tmp = this.selection.get();
-        tmp = Calendar.intToDate(tmp);
-        tmp = Calendar.printDate(tmp, "%s");
-        endTime = tmp * 1000;
-        
-        // for displaying
-        
-        var date = this.selection.get();
-        date = Calendar.intToDate(date);
-        date = Calendar.printDate(date, "%A, %B %d, %Y");
-        var ta = document.getElementById("end-calendar-input");
-        ta.value = date; 
-         
-                 
-        var tempStart = ($("#start-calendar-input").val());   // get the value of input of start calendar
-        if (tempStart.match(/\S/g)) {                 // space check with regular expression
-          if ( !(startTime < endTime) ) {
-            alert ("Enter startTime < endTime");
-          }
-          else {
-            // if new time scope is outside of default time scope
-            if(staticGraph.isOutOfDefault(startTime, endTime, defaultStartTime, defaultEndTime)) {
-              //taggedDatasets = staticGraph.getData(selectedTags, startTime, endTime);
-              defaultStartTime = startTime;
-              defaultEndTime = endTime;
-            }
-            
-            plotArray = staticGraph.setPlotArray(taggedDatasets, totalTweetsArray, separateNumber, startTime, endTime);
-            staticGraph.drawStaticGraph(plotArray);
-            //this.drawStaticGraph(plotArray, isShowNum, isShowPercent);
-          }
-        }
-      },
-       // event when time is changed
-      onTimeChange : function () {
-        
-        var hours = this.getHours();
-        var minutes = this.getMinutes();
-        
+        var minutes = this.getMinutes(); 
         // for displaying
         /*
         var time = hours + " : " + minutes;
@@ -411,4 +477,4 @@ var staticGraph = {
 };
 
 // implement
-staticGraph.displayStaticGraph();
+staticGraph.displayStaticGraph ();
