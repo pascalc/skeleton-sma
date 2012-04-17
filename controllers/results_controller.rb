@@ -14,7 +14,7 @@ class ResultsController < ApplicationController
     else
       @filters = ''
     end
-      @messages = retriever.RetrieveClassificationObjects(count,@filters)
+      @messages = retriever.RetrieveCO(@filters, count)
       mustache :results
   end
 	
@@ -27,7 +27,7 @@ class ResultsController < ApplicationController
     else
       @filters = ''
     end
-    @messages = retriever.RetrieveClassificationObjects(count,@filters)
+    @messages = retriever.RetrieveCO(@filters,count)
     @keywords = params.fetch('filter')
     mustache :results
   end
@@ -43,6 +43,10 @@ class ResultsController < ApplicationController
   end
 
   #post already set tags to google map page
+  get '/results/map' do
+    mustache :google_map
+  end
+
   post '/results/map' do
     mustache :google_map
   end
@@ -57,7 +61,7 @@ class ResultsController < ApplicationController
     startTime = params[:start_time]
     endTime = params[:end_time]
     limit = params[:limit]
-    jsonArray = retriever.RetrieveJSON(thresholds,startTime,endTime,limit)
+    jsonArray = retriever.RetrieveCOIntervall(thresholds,startTime,endTime,limit)
     puts jsonArray
     jsonArray.to_json
   end
