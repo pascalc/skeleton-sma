@@ -1,4 +1,7 @@
+require 'rubygems'
 require 'data_mapper'
+
+DataMapper.setup(:default, 'sqlite3://#{Dir.pwd}/db/user.db' )
 
 class User
   include DataMapper::Resource
