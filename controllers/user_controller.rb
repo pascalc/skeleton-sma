@@ -27,11 +27,15 @@ class UserController < ApplicationController
 	end
 	
 	get '/login' do
-		"Show the login page"
+		mustache :login
 	end
 
 	post '/login' do
-		"Show the login page"
+		if(params.has_key?('user')&&params.has_key?('password'))
+			"Verify user. The post data sent was: #{params.fetch('user')}, #{params.fetch('password')}"
+		else
+			"Intruder Alert!"
+		end
 	end
 
 	post '/logout' do
