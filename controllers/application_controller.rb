@@ -1,9 +1,23 @@
 require 'sinatra/base'
 require 'mustache/sinatra'
+#Begin Warden
+require 'sinatra'
+require 'warden'
+#require 'sinatra_warden'
+#End Warden
 
 class ApplicationController < Sinatra::Base
     # Middleware
     use Rack::Session::Cookie, :secret => "bigbrother"
+
+    #Begin Warden
+    register Sinatra::Warden
+
+    use Warden::Manager do |manager|
+        manager.default_strategies :password, :basic
+        manager.failure_app = BadAuthenticationEndsUpHere
+    end
+    #END Warden
 
     # Extra Sinatra components
     # register Sinatra::MultiRoute

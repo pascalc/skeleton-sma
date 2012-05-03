@@ -1,7 +1,10 @@
 require 'rubygems'
 require 'data_mapper'
 
-DataMapper.setup(:default, 'sqlite:///#{Dir.pwd}/db/user.db')
+#DataMapper.setup(:default, 'sqlite:///#{Dir.pwd}/db/user.db')
+a = DataMapper.setup(:default, "sqlite:db/user.db")
+
+register Warden
 
 class User
   include DataMapper::Resource
@@ -13,11 +16,8 @@ class User
   property :tagged, Integer
 
   def self.authenticate(email, password)
-    puts "debugg"
     u = self.first(:email => email)
-    puts "debugg"
     u && u.password == password ? u : nil
-    puts "debugg"
   end
 
 end
