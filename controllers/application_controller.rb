@@ -3,7 +3,6 @@ require 'mustache/sinatra'
 #Begin Warden
 require 'sinatra'
 require 'warden'
-#require 'sinatra_warden'
 #End Warden
 
 class ApplicationController < Sinatra::Base
@@ -11,11 +10,9 @@ class ApplicationController < Sinatra::Base
     use Rack::Session::Cookie, :secret => "bigbrother"
 
     #Begin Warden
-    register Sinatra::Warden
-
     use Warden::Manager do |manager|
         manager.default_strategies :password, :basic
-        manager.failure_app = BadAuthenticationEndsUpHere
+        #manager.failure_app = BadAuthenticationEndsUpHere #TODO
     end
     #END Warden
 

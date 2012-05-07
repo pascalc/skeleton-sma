@@ -1,0 +1,97 @@
+Install process:
+
+--Set-up Git repo BEGIN--
+
+sudo apt-get install git-core git-gui git-doc
+
+cd ~/.ssh
+
+Make a backup of all old keys.
+
+$ ssh-keygen -t rsa -C "your_email@youremail.com"
+
+On the GitHub site Click “Account Settings” > Click “SSH Keys” > Click “Add SSH key”
+
+Open the id_rsa.pub file with a text editor (Notepad, TextEdit, or gedit will do just fine). This is your public SSH key. You may need to turn on “view hidden files” to find it because the .ssh directory is hidden.
+
+Now paste it into the “Key” field.
+
+Hit “Add Key.”
+
+--Optional,  verify BEGIN--
+ssh -T git@github.com
+
+type yes and recieve the message.
+--Optional,  verify END--
+
+Now go to the folder you want to have the git repo.
+
+I wrote:
+git clone git@github.com:jzeeck/skeleton-sma.git
+
+Generic: git clone git@github.com:USERNAME/REPONAME.git
+
+However one can change the USERNAME and REPONAME
+
+--Optional,  keeptrack of your leader BEGIN--
+
+So, we also want to keep up with the person you forked from. I forked from Pascal so he will be in the example.
+
+One can add more of these to keep track of the seperate team members.
+
+First make sure you are in your git-repo folder then run:
+
+git remote add upstream git://github.com/pascalc/skeleton-sma.git
+
+This will make it possible to run commands such as:
+
+git pull upstream master
+
+It would pull the files in Pascal's master branch. 
+
+--Optional,  keeptrack of your leader END--
+
+--Set-up Git repo END--
+
+
+
+--Set up Ruby(rbenv) BEGIN--
+
+Follow the instructions on: https://github.com/sstephenson/rbenv#section_2
+
+Install a ruby 1.9.3 version.
+
+At step 5 I downloaded the version at :
+http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-rc1.tar.gz
+
+I placed the .tar in the /version folder.
+
+Run:
+tar xzvf ruby-1.9.3-rc1.tar.gz
+cd ruby-1.9.3-rc1
+./configure --prefix=$HOME/.rbenv/versions/1.9.3-rc1
+make
+make install
+
+Now try to run:
+gem install bundle
+bundle install
+
+If you run into problems here you might need to install some things.
+
+If you do remember to reinstall the ruby version with :
+make
+make install
+
+--Set up Ruby(rbenv) END--
+
+
+
+
+
+
+
+
+
+
+

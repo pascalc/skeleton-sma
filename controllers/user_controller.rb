@@ -35,7 +35,7 @@ class UserController < ApplicationController
 		if(params.has_key?('user')&&params.has_key?('password'))
 			"Verify user. The post data sent was: #{params.fetch('user')}, #{params.fetch('password')}"
 
-			u = User.authenticate(params["email"], params["password"])
+			u = User.authenticate(params["user"], params["password"])
     			if (u==nil)
 
 				"Could not log in"

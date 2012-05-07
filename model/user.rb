@@ -4,7 +4,6 @@ require 'data_mapper'
 #DataMapper.setup(:default, 'sqlite:///#{Dir.pwd}/db/user.db')
 a = DataMapper.setup(:default, "sqlite:db/user.db")
 
-register Warden
 
 class User
   include DataMapper::Resource
