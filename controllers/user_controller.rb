@@ -4,6 +4,7 @@ require_relative '../model/user.rb'
 class UserController < ApplicationController
 	# List users
 	get '/users' do
+		env['warden'].authenticate!
 		"List users"
 	end
 
@@ -62,6 +63,10 @@ class UserController < ApplicationController
 	end
 
 	post '/logout' do
+		env['warden'].logout
+		
+	end
+	get '/logout' do
 		env['warden'].logout
 		
 	end

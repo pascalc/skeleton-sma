@@ -113,6 +113,7 @@ input.tagInputField{
 }
 div.hidden{
 	visibility:hidden;
+	display: none;
 }
 .commitButton{
 	margin-left:0px;

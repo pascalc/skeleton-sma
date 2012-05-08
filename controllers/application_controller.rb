@@ -12,7 +12,7 @@ class ApplicationController < Sinatra::Base
     #Begin Warden
     use Warden::Manager do |manager|
         manager.default_strategies :password, :basic
-        #manager.failure_app = BadAuthenticationEndsUpHere #TODO
+        manager.failure_app = "login"
     end
 	
     Warden::Manager.serialize_into_session do |user|
@@ -22,6 +22,31 @@ class ApplicationController < Sinatra::Base
     Warden::Manager.serialize_from_session do |id|
         User.get(id)
     end
+
+Warden::Strategies.add(:password) do
+  def valid?
+    # params['email'] && params['password']
+    # p params
+    true
+  end
+
+  def authenticate!
+    u = User.authenticate(params['email'], params['password'])
+    u.nil? ? fail!("Could not log you in.") : success!(u)
+  end
+end
+
+Warden::Strategies.add(:basic) do
+
+  def valid?
+    params[:username] || params[:password]
+  end
+
+  def authenticate!
+    u = User.authenticate(params[:username], params[:password])
+    u.nil? ? fail!("Could not log in") : success!(u)
+  end
+end
 
     #END Warden
 
