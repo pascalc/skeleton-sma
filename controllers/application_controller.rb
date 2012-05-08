@@ -14,6 +14,15 @@ class ApplicationController < Sinatra::Base
         manager.default_strategies :password, :basic
         #manager.failure_app = BadAuthenticationEndsUpHere #TODO
     end
+	
+    Warden::Manager.serialize_into_session do |user|
+        user.id
+    end
+
+    Warden::Manager.serialize_from_session do |id|
+        User.get(id)
+    end
+
     #END Warden
 
     # Extra Sinatra components

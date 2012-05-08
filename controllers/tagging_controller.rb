@@ -20,6 +20,10 @@ class TaggingController < ApplicationController
 		filters = filters.chomp(',')
 		redirect "/tagging/#{count}/?filter=#{filters}"
 	end
+
+	get '/tagging' do
+		redirect "/tagging/20"
+	end
 	
 	#This should dispay the messages got from the corpus 
 	get '/tagging/:limit/?' do 

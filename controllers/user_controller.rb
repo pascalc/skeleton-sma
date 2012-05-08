@@ -33,22 +33,36 @@ class UserController < ApplicationController
 
 	post '/login' do
 		if(params.has_key?('user')&&params.has_key?('password'))
-			"Verify user. The post data sent was: #{params.fetch('user')}, #{params.fetch('password')}"
+			puts "Verify user. The post data sent was: #{params.fetch('user')}, #{params.fetch('password')}"
 
-			u = User.authenticate(params["user"], params["password"])
+    			u = User.authenticate(params['user'], params['password'])
     			if (u==nil)
-
-				"Could not log in"
-
+				if(session[:fails] != nil)
+				   session[:fails] = session[:fails] + 1
+				else
+					session[:fails] = 1
+				end
+				puts "A user failed to login #{session[:fails]} many times!"
+				redirect "/login"
 			else
-				"Logged in"
+				session[:fails] = 0
+				env['warden'].set_user(u)
+				puts "A user has logged in, user: #{env['warden'].user.email}"
+				if(session[:redirect] != nil)
+					redirect session[:redirect]			
+				else
+					redirect "/tagging"
+				end
+				#TODO forward to the right place
 			end
 		else
-			"Intruder Alert!"
+			puts "Intruder Alert!"
+			"Hackers begone!"
 		end
 	end
 
 	post '/logout' do
-		"Show the login page"
+		env['warden'].logout
+		
 	end
 end
