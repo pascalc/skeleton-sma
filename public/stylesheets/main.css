@@ -1,0 +1,23 @@
+.floatLeft{
+	float:left;
+}
+ul.margin{
+	margin-top:10px;
+	margin-bottom:10px;
+}
+li.margin{
+margin-left:25px;
+}
+li.padding{
+	padding-left:10px;
+	padding-right:10px;
+	padding-top:3px;
+	padding-bottom:3px;
+}
+li.first{
+margin-left:0px;
+}
+li.border{
+border-style:solid;
+border-width:1px;
+}
