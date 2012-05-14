@@ -68,7 +68,7 @@ class TaggingController < ApplicationController
 	#
 	#After this commit it done the session[:msgs] should be updated and the tagging page should be loaded
 	post %r{/tagging/commit/(\d{1,99999})} do |id|
-		#puts "Working, commit id was #{id} and the tags string should have been #{params.fetch('tags')}"
+		puts "Working, commit id was #{id} and the tags string should have been #{params.fetch('tags')}"
 		jsonArray = HTTParty.put("http://nosy.pspace.se:8888/corpus/#{id}?tags=#{params.fetch('tags')}")
 		#puts "http://nosy.pspace.se:8888/corpus/#{id}?tags=#{params.fetch('tags')}"
 		puts jsonArray 
@@ -79,5 +79,6 @@ class TaggingController < ApplicationController
 	#After this discard it done the session[:msgs] should be updated and the tagging page should be loaded
 	post %r{/tagging/discard/(\d{1,99999})} do |id|
 		puts "Discard working, discard id was #{id}"
+		HTTParty.delete("http://nosy.pspace.se:8888/corpus?id=#{id}")
 	end
 end

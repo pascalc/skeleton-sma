@@ -1,9 +1,16 @@
+a, a:visited{
+	text-decoration:none
+}
 .floatLeft{
 	float:left;
+}
+.floatRight{
+	float:right;
 }
 ul.margin{
 	margin-top:10px;
 	margin-bottom:10px;
+	width:100%;
 }
 li.margin{
 margin-left:25px;

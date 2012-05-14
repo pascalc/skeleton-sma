@@ -1,0 +1,16 @@
+.center{
+	margin:0px auto;
+	padding-left:auto;
+	padding-right:auto;
+}
+.loginWrapper{
+	padding:20px;
+	background-color:#DDDDDD;
+}
+.FloatLeft{
+	float:left;
+}
+.nosyLable{
+	padding-top:60px;
+	padding-left:60px;
+}

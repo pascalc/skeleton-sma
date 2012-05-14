@@ -40,6 +40,8 @@ class UserController < ApplicationController
     			if (u==nil)
 				if(session[:fails] != nil)
 				   session[:fails] = session[:fails] + 1
+				   @nr_fails = session[:fails]
+				   puts @nr_fails
 				else
 					session[:fails] = 1
 				end
@@ -47,14 +49,14 @@ class UserController < ApplicationController
 				redirect "/login"
 			else
 				session[:fails] = 0
+				@nr_fails = session[:fails]
 				env['warden'].set_user(u)
 				puts "A user has logged in, user: #{env['warden'].user.email}"
 				if(session[:redirect] != nil)
-					redirect session[:redirect]			
+					redirect session[:redirect]#This redirects to the wanted place	
 				else
-					redirect "/tagging"
+					redirect "/tagging"# Otherwise redirect to another place
 				end
-				#TODO forward to the right place
 			end
 		else
 			puts "Intruder Alert!"
@@ -64,10 +66,10 @@ class UserController < ApplicationController
 
 	post '/logout' do
 		env['warden'].logout
-		
+		mustache :logout		
 	end
 	get '/logout' do
 		env['warden'].logout
-		
+		mustache :logout
 	end
 end
