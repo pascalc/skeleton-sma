@@ -31,7 +31,10 @@ function staticGraphPost(){
 	$('#resultsForm').attr('action', '../results/static');
 	$('#resultsForm').submit();
 }
-
+function dynamicGraphPost(){
+	$('#resultsForm').attr('action', '../results/dynamic');
+	$('#resultsForm').submit();
+}
 function googlePost(){
 	$('#resultsForm').attr('action', '../results/map');
 	$('#resultsForm').submit();
