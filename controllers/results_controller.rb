@@ -17,6 +17,20 @@ class ResultsController < ApplicationController
       @messages = retriever.RetrieveCO(@filters, count)
       mustache :results
   end
+
+  post '/results' do
+	##TODO
+    count = 10
+    retriever = ResultsRetrieve.new()
+
+    if(params.has_key?('filter'))  
+      @filters = filterFunction('filter')
+    else
+      @filters = ''
+    end
+      @messages = retriever.RetrieveCO(@filters, count)
+      mustache :results
+  end
 	
   #Displays a given limit of messages from classifier using the evaluate view
   post '/results/limit' do
