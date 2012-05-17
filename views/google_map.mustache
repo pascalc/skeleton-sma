@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="../../stylesheets/google_map.css">
+
+<link rel="stylesheet" type="text/css" href="../../stylesheets/jscal2.css" />
+<link rel="stylesheet" type="text/css" href="../../stylesheets/border-radius.css" />
+<link rel="stylesheet" type="text/css" href="../../stylesheets/steel.css" />
+
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>	
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="../../javascripts/Fluster2.packed.js"></script>	
+
+<script type="text/javascript" src="../../javascripts/jscal2.js"></script>
+<script src="../../javascripts/jscal2.js"></script>
+<script src="../../javascripts/en.js"></script>
+
+<div class="container" style="width: 800px; margin:0 auto;">
+	<div class="tagsWrapper">
+		<div class="filterDiv">
+			<h2>Write comma-seperated tags for filter</h2>
+			<input id="tags" name="filter" type="text" size="40" class="filterInputField"></input>
+			<button onclick="loaddata();">Refresh</button>
+		</div>
+	</div>
+	<br />
+	<div id="map_canvas" class="map" style="width: 800px; height: 600px"></div>
+	
+	<div id="date" class="date" style="width:800px;">
+		<table style="width:800px;">
+			<tr>
+				<td style="width:400px;"><div align="center"><h2>Start date</h2></div></td>
+				<td style="width:400px;"><div align="center"><h2>End date</h2></div></td>
+			</tr>
+			<tr>
+				<td style="width:400px;"><div align="center"><input size="28" id="startdate"/></div></td>
+				<td style="width:400px;"><div align="center"><input size="28" id="enddate" /></div></td>
+			</tr>
+			<tr>
+				<td style="width:400px;" id="startcontainer" />
+				<td style="width:400px;" id="endcontainer" />
+			</tr>
+		</table>
+	</div>
+</div>
+<script type="text/javascript" src="../../javascripts/google_map.js"></script>
