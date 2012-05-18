@@ -4,6 +4,8 @@
  * based on 5.4.3.4 in ADD.
  */
 
+$(document).ready(function(){
+
 // -- Main Class --
 //
 // Arguments:
@@ -18,6 +20,9 @@ var StaticDisplayClass = function (sepNumber)
   this.countOfStoredTags = 0;             // Number of tags already stored into array
   this.selectedTags = [];                 // Specified tags
   this.plotArray = [];                    // Data Array just before plot
+  this.alreadySet = false;
+  this.inCalendar = false;
+  this.usersInChangingBox = false;
   
   
   // class for taggedDatasets
@@ -96,10 +101,11 @@ var StaticDisplayClass = function (sepNumber)
   // and the percentage of tweets in "taggedDatasets are calculated and stored to "plotArray"
   this.setPlotArray = function (startTime, endTime) 
   {
+    //alert ('setplot');
+    this.alreadySet = true;
+    //alert ('setplot');
     // initialization
     var currentNumber;
-    //var plotArray = [];
-    //var separatedTime = [];
     var interval = Math.round ((endTime - startTime) / separateNumber);
     separatedTime.length = 0;
     this.plotArray.length = 0;
@@ -113,11 +119,10 @@ var StaticDisplayClass = function (sepNumber)
     // in order to avoid ignoring endTime because of rounding
     var dammyStart = startTime - interval;
     // for the result of the first element
-    
+
     for (var i = 0, i_len = taggedDatasets.length; i < i_len; i++)// for number of tags
     {
       this.plotArray[i] = new plotObject (taggedDatasets[i].tagName);
-  
       // j : for timeArray
       // k : for separatedTime
       // first check time before dammyStart
@@ -157,12 +162,11 @@ var StaticDisplayClass = function (sepNumber)
         k++;
       }
     }
-    //return plotArray;
-  };
+  }
   
   // -function returnLengthOfTaggedDatasets-
   // Get the length of 'taggedDatasets'
-  this.returnLengthOfTaggedDatasets = function()
+  this.returnLengthOfTaggedDatasets = function ()
   {
     return taggedDatasets.length;
   }
@@ -221,7 +225,8 @@ var drawStaticGraph = function (ObjectStatic)
       }],
       grid : {
         markings : weekendAreas
-      }
+      },
+      lines: {show:true, fill:true}
     };
     // convert for plot format
     var data = [];
@@ -234,14 +239,15 @@ var drawStaticGraph = function (ObjectStatic)
         label : ObjectStatic.plotArray[m].tagName
       });
     }
-
     // plot
     var plot = $.plot ($("#placeholder"), data, options);
 
     // zooming
     $("#placeholder").bind ("plotselected", function (event, ranges) 
     {      
+      //alert ('placeholder');
       // rearrange so that detailed will be shown
+      ObjectStatic.alreadySet = false;
       ObjectStatic.plotArray.length = 0;
       ObjectStatic.setPlotArray (Math.round (ranges.xaxis.from), Math.round (ranges.xaxis.to))
       data.length = 0;
@@ -299,22 +305,30 @@ var displayStaticGraph = function () {
   {
     Static.selectedTags.length = 0;
     Static.selectedTags = ($("#tagSelected-box").val ());    
+    //alert ('box');
     if (Static.selectedTags.match (/\S/g))           // space check by regular expression
     {      
       Static.selectedTags = Static.selectedTags.split (",");       // split with comma and store to array
+      Static.usersInChangingBox = true;
       Static.startGetData (startTime, endTime);
-
+      
       // After ajax completed
       $(document).ajaxComplete (function () 
       { 
-        if (Static.countOfStoredTags < Static.selectedTags.length) 
+        if (!Static.inCalendar && Static.usersInChangingBox) 
         {
-          Static.recursiveGet (startTime, endTime);      
-        } 
-        else if (Static.countOfStoredTags === Static.selectedTags.length) 
-        {
-          Static.setPlotArray (startTime, endTime);
-          drawStaticGraph (Static);
+          //alert ("i'mhere");
+          if (Static.countOfStoredTags < Static.selectedTags.length) 
+          {
+            Static.recursiveGet (startTime, endTime);      
+          } 
+          else if (Static.countOfStoredTags === Static.selectedTags.length) 
+          {
+            Static.alreadySet = false;
+            Static.setPlotArray (startTime, endTime);
+            drawStaticGraph (Static);
+            Static.usersInChangingBox = false;
+          }
         }
       });
     }
@@ -333,6 +347,7 @@ var displayStaticGraph = function () {
     // event when date is changed
     onSelect : function () 
     {
+      var tempStartTime = startTime;
       // get new startTime
       var tmp = this.selection.get ();
       tmp = Calendar.intToDate (tmp);
@@ -346,18 +361,28 @@ var displayStaticGraph = function () {
       var ta = document.getElementById ("start-calendar-input");
       ta.value = date;
       var tempEnd = ($("#end-calendar-input").val ()); // get the value of input of end calendar
-      
-      //if (Static.selectedTags.length !== 0 && tempEnd !== "")
-      if ($("#tagSelected-box").val () && tempEnd !== "")
+            
+      if (tempEnd === "")
       {
-        if (!(startTime < endTime)) 
+        //alert (3);
+        defaultStartTime = startTime;
+      }
+      else if (!(startTime < endTime)) 
+      {
+        alert ("Enter startTime < endTime");
+        startTime = tempStartTime;
+      }
+      else if ($("#tagSelected-box").val ())
+      {
+        if (Static.returnLengthOfTaggedDatasets !== 0) 
         {
-          alert ("Enter startTime < endTime");
-        } else if (Static.returnLengthOfTaggedDatasets !== 0) {
-
            // if new time scope is outside of default time scope
           if (isOutOfDefault (startTime, endTime, defaultStartTime, defaultEndTime)) 
           {
+            defaultStartTime = startTime;
+            defaultEndTime = endTime;
+            Static.inCalendar = true;
+            Static.alreadySet = false;
             Static.startGetData (startTime, endTime);
             // After ajax completed
             $(document).ajaxComplete (function () 
@@ -368,17 +393,28 @@ var displayStaticGraph = function () {
               } 
               else if (Static.countOfStoredTags === Static.selectedTags.length) 
               {
-                Static.setPlotArray (startTime, endTime);
-                drawStaticGraph (Static);
+                //alert('start');
+                if (Static.alreadySet)
+                {
+                  Static.plotArray.length = 0;
+                  Static.setPlotArray (startTime, endTime);
+                  drawStaticGraph (Static);
+                  Static.inCalendar = false;
+                }
               }
             });
-            defaultStartTime = startTime;
-            defaultEndTime = endTime;
-          } else {
+          } else {                      // If not, we don't need to get new data.
+            //alert ('start2');
+            Static.alreadySet = false;
+            Static.plotArray.length = 0;
             Static.setPlotArray (startTime, endTime);
-            Static.drawStaticGraph (Static);
+            drawStaticGraph (Static);
           }
         }
+      }
+      else
+      {
+        defaultStartTime = startTime;
       }
     }
   });
@@ -396,7 +432,8 @@ var displayStaticGraph = function () {
     // event when date is changed
     onSelect : function () 
     {
-      // get new startTime
+      var tempEndTime = endTime;
+      // get new endTime
       var tmp = this.selection.get ();
       tmp = Calendar.intToDate (tmp);
       tmp = Calendar.printDate (tmp, "%s");
@@ -412,16 +449,27 @@ var displayStaticGraph = function () {
       
       // get the value of input of start calendar
       //if (Static.selectedTags.length !== 0 && tempStart !== "") 
-      if ($("#tagSelected-box").val () && tempStart !== "")
-      {
-        if (!(startTime < endTime)) 
-        {
-          alert ("Enter startTime < endTime");
-        } else if (Static.returnLengthOfTaggedDatasets !== 0) {  // if there is already some input
 
+      if (tempStart === "")
+      {
+        defaultEndTime = endTime;
+      }
+      else if (!(startTime < endTime)) 
+      {
+        alert ("Enter startTime < endTime");
+        endTime = tempEndTime;
+      }
+      else if ($("#tagSelected-box").val ())
+      {
+        if (Static.returnLengthOfTaggedDatasets !== 0)  // if there is already some input
+        {
           // if new time scope is outside of default time scope
           if (isOutOfDefault (startTime, endTime, defaultStartTime, defaultEndTime)) 
           {
+            defaultStartTime = startTime;
+            defaultEndTime = endTime;
+            Static.inCalendar = true;
+            Static.alreadySet = false;
             Static.startGetData (startTime, endTime);
             // After ajax completed
             $(document).ajaxComplete (function () 
@@ -432,17 +480,28 @@ var displayStaticGraph = function () {
               } 
               else if (Static.countOfStoredTags === Static.selectedTags.length) 
               {
-                Static.setPlotArray (startTime, endTime);
-                drawStaticGraph (Static);
+                //alert (1);
+                if (!Static.alreadySet) 
+                {
+                  Static.plotArray.length = 0;
+                  Static.setPlotArray (startTime, endTime);
+                  drawStaticGraph (Static);
+                  Static.inCalendar = false;
+                }
               }
             });
-            defaultStartTime = startTime;
-            defaultEndTime = endTime;
           } else {
+            //alert (Static.plotArray.length);
+            Static.alreadySet = false;
+            Static.plotArray.length = 0;
             Static.setPlotArray (startTime, endTime);
-            Static.drawStaticGraph (Static);
+            drawStaticGraph (Static);
           }
         }
+      }
+      else 
+      {
+        defaultEndTime = endTime;
       }
     }
   });  
@@ -452,3 +511,5 @@ var displayStaticGraph = function () {
 $('#start-calendar-input').val("");
 $('#end-calendar-input').val("");
 displayStaticGraph ();
+
+});
