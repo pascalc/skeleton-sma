@@ -42,6 +42,16 @@ class ResultsController < ApplicationController
     mustache :static_graph
   end
 
+  #this temporary sollution
+  get '/results/dynamic' do
+    mustache :dynamic_graph
+  end
+
+  #post already set tags to dynamic graph page
+  post '/results/dynamic' do
+    mustache :dynamic_graph
+  end
+
   #post already set tags to google map page
   get '/results/map' do
     mustache :google_map
