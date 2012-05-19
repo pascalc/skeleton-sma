@@ -6,7 +6,6 @@ function showFullMessage(postID){
     element.hide();
     element.fadeIn('fast');
 
-
     $('#'+'partial' + postID).addClass('selected');
 
     var tempID1 = parseInt(lastPostID);
@@ -15,6 +14,7 @@ function showFullMessage(postID){
         hideInfo(lastPostID)			//Om ej samma, hideInfo - förra			
     }
     lastPostID = postID;
+
 }
 function hideInfo(postID) {
     var element=  $('#'+'full' + postID);		//gör till element..

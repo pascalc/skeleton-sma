@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="../../stylesheets/results.css">		
 <script src="../../javascripts/results.js"></script>
 <div class="container">
-		<div class="topresultsWrapper six columns alpha">
+		<div class="topresultsWrapper five columns alpha">
 		<form method="post" action="" id="resultsForm" >
 		<button type="submit" id="getNewMsg" >Get New Messages</button>
 			<div class = "limitWrapper">		
@@ -34,38 +34,43 @@
 		</table>
 	
 		</div>
-
-		<button type="submit" id="sendToGraph" onclick="staticGraphPost()">Show Static Graph</button>
-		<button type="submit" id="sendToGoogleMaps" onclick="googlePost()">Google Maps</button>	
-		<button type="submit" id="sendToGoogleMaps" onclick="dynamicGraphPost()">Show Dynamic Graph</button>
+		<div class="five columns omega">
+			<button type="submit" id="sendToGraph" onclick="staticGraphPost()">Show Static Graph</button>
+			<button type="submit" id="sendToGoogleMaps" onclick="dynamicGraphPost()">Show Dynamic Graph</button>
+			<button type="submit" id="sendToGoogleMaps" onclick="googlePost()">Google Maps</button>				
+		</div>
         	
 		{{#messages}}
-			<div class="hidden ten columns omega fixedPosition fullMessageContainer" id="full{{_id}}">
-				<div class="">
-					<h4> Message: </h4>
-					<p class="messageText">{{text}}</p>
+			<div class="hidden five columns omega fixedPosition fullMessageContainer" id="full{{_id}}">
+				<div class= "clearLeft ">				
+					<div class="floatLeft min200Width">
+						<h4> Message: </h4>
+						<p class="messageText">{{text}}</p>
+					</div>
+					<div class="floatLeft min200Width">
+						<h4> Date: </h4>
+						<p class="messageDate">{{created_at}}</p>
+					</div>
 				</div>
-				<div class="">
-					<h4> Date: </h4>
-					<p class="messageDate">{{created_at}}</p>
+				<div class = "clearLeft">
+					<div class="floatLeft min200Width">
+						<h4> Author: </h4>
+						<p class="messageAuthor">{{author}}</p>
+					</div>
+					<div class="floatLeft min200Width">
+						<h4> Coordinates: </h4>
+						<p class="messageCoordinates">{{coords}}</p>
+					</div>
 				</div>
-				<div class="">
-					<h4> Author: </h4>
-					<p class="messageAuthor">{{author}}</p>
-				</div>
-				<div class="">
-					<h4> Coordinates: </h4>
-					<p class="messageCoordinates">{{coords}}</p>
-				</div>
-				<div class="">
+				<div class="floatLeft min200Width">
 					<h4> Tags: </h4>
 					<p class="messageTags">{{tags}}</p>
 				</div>
 			</div>
 		{{/messages}}
-		<table class="five columns alpha">
+		<!---<table class="five columns alpha">
 			<tr>
 				<td>Insert streaming here</td>
 			</tr>
-		</table>
+		</table>--->
 </div>
