@@ -57,10 +57,34 @@
 			</div>
 			</div>
 		{{/messages}}
-		<table class="five columns alpha">
-			<tr>
-				<td>Insert streaming here</td>
-			</tr>
+		<h3> Live Twitter Stream </h3>
+		<table class="five columns alpha" id="live-stream">
 		</table>
 </div>
 <br><br><br><br><br><br><br><br>
+
+<!-- Juggernaut -->
+<script src="http://nosy.pspace.se:8080/application.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function(){
+      // Juggernaut
+      var show = function(data){
+        var authorLink = "<a href=http://twitter.com/" + data.author + "><strong>@" + data.author + ":</strong></a>";
+        var tags = JSON.stringify(data.tags);
+        var line = "<p>" + authorLink + " " + data.text + " " + tags +  "</p>";
+        var row = "<tr><td>" + line + "</td></tr>";
+        $(row).prependTo("#live-stream");
+      };
+
+      var jug = new Juggernaut({
+        secure: ('https:' == document.location.protocol),
+        host: "nosy.pspace.se",
+        port: 8080
+      });
+
+      jug.subscribe("nosy", function(data){
+        show(data);
+        console.log(data);
+      });
+    });
+</script>
