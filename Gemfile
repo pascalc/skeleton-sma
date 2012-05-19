@@ -10,6 +10,9 @@ gem "sinatra-contrib"
 
 # Model
 gem "httparty"
+gem "warden"
+gem "datamapper"
+gem "dm-sqlite-adapter"
 
 # Views
 gem "mustache"
