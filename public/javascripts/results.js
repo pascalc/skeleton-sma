@@ -1,4 +1,11 @@
 var lastPostID;
+$(document).ready(function() {
+  //var number = $("#selectedNumber").html(); //Edit this if you want the selector to work
+  //$('#number'+number).attr("selected","selected");
+ 
+  $('.fixedPosition').css('left',$('#sendToGoogleMaps').offset().left +$('#sendToGoogleMaps').width()+ 80);
+  $('.fixedPosition').css('top',$('#sendToGoogleMaps').offset().top);
+});
 
 function showFullMessage(postID){
     var element = $('#' + 'full' + postID);
