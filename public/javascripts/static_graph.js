@@ -14,7 +14,7 @@ var StaticDisplayClass = function (sepNumber)
 {
   // private
   var separateNumber = sepNumber;
-  var separatedTime = [];                // Time array separated by 'separateNumber'
+  var separatedTime = [];                 // Time array separated by 'separateNumber'
   var taggedDatasets = [];                // Original data obtained from server
 
   this.countOfStoredTags = 0;             // Number of tags already stored into array
@@ -22,8 +22,8 @@ var StaticDisplayClass = function (sepNumber)
   this.plotArray = [];                    // Data Array just before plot
   this.alreadySet = false;
   this.inCalendar = false;
-  this.usersInChangingBox = false;
-  
+  this.usersInChangingBox = false;        // Bool for user is changing tag box now or not.
+  this.inRecursiveGet = false;
   
   // class for taggedDatasets
   function taggedObject (tagName) 
@@ -69,7 +69,9 @@ var StaticDisplayClass = function (sepNumber)
       context : this,      
       success : function (data) 
       {
+        //this.countOfStoredTags++;
         this.storeDataToArray (data);
+        this.inRecursiveGet = false;
       },
       error : function (dammy, text) 
       {
@@ -87,13 +89,10 @@ var StaticDisplayClass = function (sepNumber)
     { 
       // convert date
       var milliDate = Date.parse (data[j].created_at);
-      //var offset = myDate.getTimezoneOffset() * 1000;
-      //var withOffset = myDate.getTime();
-      //var withoutOffset = withOffset - offset;
       taggedDatasets[this.countOfStoredTags].timeArray.push (milliDate);
     }
     taggedDatasets[this.countOfStoredTags].timeArray.sort (function (a, b) {return a-b;});   // Currently we need sort!
-    this.countOfStoredTags++;  
+    this.countOfStoredTags++;
   }
   
   // -function setPlotArray-
@@ -101,9 +100,7 @@ var StaticDisplayClass = function (sepNumber)
   // and the percentage of tweets in "taggedDatasets are calculated and stored to "plotArray"
   this.setPlotArray = function (startTime, endTime) 
   {
-    //alert ('setplot');
     this.alreadySet = true;
-    //alert ('setplot');
     // initialization
     var currentNumber;
     var interval = Math.round ((endTime - startTime) / separateNumber);
@@ -128,8 +125,7 @@ var StaticDisplayClass = function (sepNumber)
       // first check time before dammyStart
       for (var j = 0, j_len = taggedDatasets[i].timeArray.length; j < j_len; j++) 
       {
-        if (dammyStart <= taggedDatasets[i].timeArray[j])
-          break;
+        if (dammyStart <= taggedDatasets[i].timeArray[j]) break;
       }
   
       for (var k = 0; j < j_len, k < separateNumber + 1; k++) 
@@ -146,8 +142,7 @@ var StaticDisplayClass = function (sepNumber)
             {
               currentNumber++;
               j++;
-              if (j_len <= j)
-                break;
+              if (j_len <= j) break;
             }
           }
           this.plotArray[i].number.push ([separatedTime[k], currentNumber]);
@@ -245,7 +240,6 @@ var drawStaticGraph = function (ObjectStatic)
     // zooming
     $("#placeholder").bind ("plotselected", function (event, ranges) 
     {      
-      //alert ('placeholder');
       // rearrange so that detailed will be shown
       ObjectStatic.alreadySet = false;
       ObjectStatic.plotArray.length = 0;
@@ -305,32 +299,35 @@ var displayStaticGraph = function () {
   {
     Static.selectedTags.length = 0;
     Static.selectedTags = ($("#tagSelected-box").val ());    
-    //alert ('box');
     if (Static.selectedTags.match (/\S/g))           // space check by regular expression
     {      
       Static.selectedTags = Static.selectedTags.split (",");       // split with comma and store to array
-      Static.usersInChangingBox = true;
-      Static.startGetData (startTime, endTime);
-      
-      // After ajax completed
-      $(document).ajaxComplete (function () 
-      { 
-        if (!Static.inCalendar && Static.usersInChangingBox) 
-        {
-          //alert ("i'mhere");
-          if (Static.countOfStoredTags < Static.selectedTags.length) 
+      if (Static.selectedTags.length <= 3)
+      {
+        Static.usersInChangingBox = true;
+        Static.startGetData (startTime, endTime);
+        
+        // After ajax completed
+        $(document).ajaxComplete (function () 
+        { 
+          if (!Static.inCalendar && Static.usersInChangingBox) 
           {
-            Static.recursiveGet (startTime, endTime);      
-          } 
-          else if (Static.countOfStoredTags === Static.selectedTags.length) 
-          {
-            Static.alreadySet = false;
-            Static.setPlotArray (startTime, endTime);
-            drawStaticGraph (Static);
-            Static.usersInChangingBox = false;
+            if (Static.countOfStoredTags < Static.selectedTags.length) 
+            {
+              Static.recursiveGet (startTime, endTime);      
+            } else if (Static.countOfStoredTags === Static.selectedTags.length) {
+              Static.alreadySet = false;
+              Static.setPlotArray (startTime, endTime);
+              drawStaticGraph (Static);
+              Static.usersInChangingBox = false;
+            }
           }
-        }
-      });
+        });
+      } else {
+        alert ("Please set less than or equal to three tags.");
+      }
+    } else {
+      alert ("Please separate tags with commas. And no space.");
     }
   });
   
@@ -364,7 +361,6 @@ var displayStaticGraph = function () {
             
       if (tempEnd === "")
       {
-        //alert (3);
         defaultStartTime = startTime;
       }
       else if (!(startTime < endTime)) 
@@ -389,12 +385,15 @@ var displayStaticGraph = function () {
             { 
               if (Static.countOfStoredTags < Static.selectedTags.length) 
               {
-                Static.recursiveGet (startTime, endTime);      
+                if (!Static.inRecursiveGet) 
+                {
+                  Static.inRecursiveGet = true;
+                  Static.recursiveGet (startTime, endTime);
+                }
               } 
               else if (Static.countOfStoredTags === Static.selectedTags.length) 
               {
-                //alert('start');
-                if (Static.alreadySet)
+                if (!Static.alreadySet)
                 {
                   Static.plotArray.length = 0;
                   Static.setPlotArray (startTime, endTime);
@@ -404,16 +403,13 @@ var displayStaticGraph = function () {
               }
             });
           } else {                      // If not, we don't need to get new data.
-            //alert ('start2');
             Static.alreadySet = false;
             Static.plotArray.length = 0;
             Static.setPlotArray (startTime, endTime);
             drawStaticGraph (Static);
           }
         }
-      }
-      else
-      {
+      } else {
         defaultStartTime = startTime;
       }
     }
@@ -448,8 +444,6 @@ var displayStaticGraph = function () {
       var tempStart = ($("#start-calendar-input").val ());
       
       // get the value of input of start calendar
-      //if (Static.selectedTags.length !== 0 && tempStart !== "") 
-
       if (tempStart === "")
       {
         defaultEndTime = endTime;
@@ -474,14 +468,16 @@ var displayStaticGraph = function () {
             // After ajax completed
             $(document).ajaxComplete (function () 
             { 
-              if (Static.countOfStoredTags < Static.selectedTags.length) 
+              if (!Static.alreadySet) 
               {
-                Static.recursiveGet (startTime, endTime);      
-              } 
-              else if (Static.countOfStoredTags === Static.selectedTags.length) 
-              {
-                //alert (1);
-                if (!Static.alreadySet) 
+                if (Static.countOfStoredTags < Static.selectedTags.length) 
+                {
+                  if (!Static.inRecursiveGet) 
+                  {
+                    Static.inRecursiveGet = true;
+                    Static.recursiveGet (startTime, endTime);
+                  }      
+                } else if (Static.countOfStoredTags === Static.selectedTags.length) 
                 {
                   Static.plotArray.length = 0;
                   Static.setPlotArray (startTime, endTime);
@@ -491,16 +487,13 @@ var displayStaticGraph = function () {
               }
             });
           } else {
-            //alert (Static.plotArray.length);
             Static.alreadySet = false;
             Static.plotArray.length = 0;
             Static.setPlotArray (startTime, endTime);
             drawStaticGraph (Static);
           }
         }
-      }
-      else 
-      {
+      } else {
         defaultEndTime = endTime;
       }
     }
