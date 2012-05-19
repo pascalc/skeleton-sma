@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="../../stylesheets/results.css">		
 <script src="../../javascripts/results.js"></script>
-
 <div class="container">
-		<div class="topresultsWrapper">
+		<div class="topresultsWrapper six columns alpha">
 		<form method="post" action="" id="resultsForm" >
 		<button type="submit" id="getNewMsg" >Get New Messages</button>
 			<div class = "limitWrapper">		
@@ -15,46 +14,53 @@
   			</select>			
 			</div>
 			<div class="filterDiv" >
-				<br> <br> <br>
-				<label for="filter">Write comma-seperated tags for filter</label>
-				<input name="filter" type="text"  class="filterInputField" value="{{keywords}}">
+				<label for="filter">Write tags:threashold to filter</label>
+				<input name="filter" placeholder="tag:0.99" type="text"  class="filterInputField" value="{{keywords}}">
 			</div>
 		</form>
 		
-		<button type="submit" id="sendToGraph" onclick="staticGraphPost()">Show Static Graph</button>
-		<button type="submit" id="sendToGoogleMaps" onclick="googlePost()">Google Maps</button>	
-		<button type="submit" id="sendToGoogleMaps" onclick="dynamicGraphPost()">Show Dynamic Graph</button>	
-		</div>
-        	<table class="five columns alpha resultsMsg">
-			<tr class="partialContainer top">
-				<td class="message">Messages</td>
+
+
+		<table class="five columns alpha resultsMsg marginBot">
+			<tr class="messageContainer top">
+				<caption><b>Overview</b></caption>
 			</tr>
 			{{#messages}}
-				<tr id="partial{{_id}}" onClick="showFullMessage('{{_id}}');" class="partailMessageContainer">
-				<td class="partialText">{{text}}</td>
+				<tr id="partial{{_id}}" onClick="showFullMessage('{{_id}}');" class="messageContainer messageItem">
+				<td class="partialText proseven">{{text}}</td>
 				<td class="partialDate">{{created_at}}</td>
-				<tr>
-				
+				</tr>
 			{{/messages}}
-			
-
 		</table>
+	
+		</div>
+
+		<button type="submit" id="sendToGraph" onclick="staticGraphPost()">Show Static Graph</button>
+		<button type="submit" id="sendToGoogleMaps" onclick="googlePost()">Google Maps</button>	
+		<button type="submit" id="sendToGoogleMaps" onclick="dynamicGraphPost()">Show Dynamic Graph</button>
+        	
 		{{#messages}}
-			<div class="hidden ten columns omega fixedPosition" id="full{{_id}}">
-			<div class="fullMessageContainer">	
-				<h4> Message: </h4>
-				<p class="messageText">{{text}}</p>
-				<br><br><br><br><br>
-				<h4> Date: </h4>
-				<p class="messageDate">{{date_created}}</p>
-				<h4> Author: </h4>
-				<p class="messageAuthor">{{author}}</p>
-				<h4> Coordinates: </h4>
-				<p class="messageCoordinates">{{coords}}</p>
-				<h4> Tags: </h4>
-				<p class="messageTags">{{tags}}</p>
-				<br><br>
-			</div>
+			<div class="hidden ten columns omega fixedPosition fullMessageContainer" id="full{{_id}}">
+				<div class="">
+					<h4> Message: </h4>
+					<p class="messageText">{{text}}</p>
+				</div>
+				<div class="">
+					<h4> Date: </h4>
+					<p class="messageDate">{{created_at}}</p>
+				</div>
+				<div class="">
+					<h4> Author: </h4>
+					<p class="messageAuthor">{{author}}</p>
+				</div>
+				<div class="">
+					<h4> Coordinates: </h4>
+					<p class="messageCoordinates">{{coords}}</p>
+				</div>
+				<div class="">
+					<h4> Tags: </h4>
+					<p class="messageTags">{{tags}}</p>
+				</div>
 			</div>
 		{{/messages}}
 		<table class="five columns alpha">
@@ -63,4 +69,3 @@
 			</tr>
 		</table>
 </div>
-<br><br><br><br><br><br><br><br>
