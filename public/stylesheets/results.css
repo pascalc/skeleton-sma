@@ -18,6 +18,11 @@
 	border-width:1px;
 	border-color:#999999;
 }
+.resultsMsg{
+	border-style:solid;
+	border-width:1px;
+	border-color:#999999;
+}
 .top{
 	background-color:#777777;
 }
@@ -51,7 +56,6 @@ p.messageText{
 	padding-left:5px;
 	color:#000000;
 	float:left;
-	width:250px;
 }
 p.messageDate p.messageAuthor p.Coordinates p.messageTags{
 	margin:0;
@@ -61,21 +65,42 @@ p.messageDate p.messageAuthor p.Coordinates p.messageTags{
 }
 .fixedPosition{
 	position:fixed;
-	left:520px;
-	top:150px;
+	left:830px;
+	top:192px;
 	border-style:solid;
-	border-width:2px;
+	border-width:1px;
 	padding:10px; 
 }
 .padder{
 	padding-bottom:150px;
 	padding-right:20px; 
 }
+.filterDiv{
+	float: left;
+}
 .filterPadding{
 	padding-left:50px;
 
-}	
-tr:nth-child(even) {background: #CCCCCC;}
+}
+.proseven{
+	width:70%;
+	word-wrap:break-word;
+}
+.messageItem{
+	padding-top:5px;
+	padding-bottom:5px;
+}
+.floatLeft{
+	float:left;
+}
+.clearLeft{
+	clear:left;
+}
+.min200Width{
+	min-width:260px;
+}
+tr:nth-child(even) {background: #F0F0F0;}
 tr:nth-child(odd) {background: #FFFFFF;}
-tr.messageItem:hover{background:#00CCFF;}
-tr.selected{background:#00CC66!important;}
+tr.messageItem:hover{background:#BBCCFF;}
+tr.selected{background:#99CC99!important;}
+tr.messageItem{overflow:hidden;}

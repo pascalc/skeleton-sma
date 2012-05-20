@@ -1,11 +1,17 @@
 var lastPostID;
+$(document).ready(function() {
+  //var number = $("#selectedNumber").html(); //Edit this if you want the selector to work
+  //$('#number'+number).attr("selected","selected");
+ 
+  $('.fixedPosition').css('left',$('#sendToGoogleMaps').offset().left +$('#sendToGoogleMaps').width()+ 80);
+  $('.fixedPosition').css('top',$('#sendToGoogleMaps').offset().top);
+});
 
 function showFullMessage(postID){
     var element = $('#' + 'full' + postID);
     element.removeClass('hidden');
     element.hide();
     element.fadeIn('fast');
-
 
     $('#'+'partial' + postID).addClass('selected');
 
@@ -15,6 +21,7 @@ function showFullMessage(postID){
         hideInfo(lastPostID)			//Om ej samma, hideInfo - förra			
     }
     lastPostID = postID;
+
 }
 function hideInfo(postID) {
     var element=  $('#'+'full' + postID);		//gör till element..
