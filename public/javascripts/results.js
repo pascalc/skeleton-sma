@@ -3,8 +3,8 @@ $(document).ready(function() {
   //var number = $("#selectedNumber").html(); //Edit this if you want the selector to work
   //$('#number'+number).attr("selected","selected");
  
-  $('.fixedPosition').css('left',$('#sendToGoogleMaps').offset().left +$('#sendToGoogleMaps').width()+ 80);
-  $('.fixedPosition').css('top',$('#sendToGoogleMaps').offset().top);
+  $('.fixedPosition').css('left',$('#overview').offset().left + 292);
+  $('.fixedPosition').css('top',$('#overview').offset().top);
 });
 
 function showFullMessage(postID){
