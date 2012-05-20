@@ -99,6 +99,9 @@ p.messageDate p.messageAuthor p.Coordinates p.messageTags{
 .min200Width{
 	min-width:260px;
 }
+.marginBot{
+	margin-bottom:50px;
+}
 tr:nth-child(even) {background: #F0F0F0;}
 tr:nth-child(odd) {background: #FFFFFF;}
 tr.messageItem:hover{background:#BBCCFF;}
