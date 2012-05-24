@@ -9,6 +9,10 @@
 	float:left;
 	width:100%;
 }
+.filterDiv{
+	margin-left:15px;
+	float:left;
+}
 
 #cal{
   margin-bottom:300px;
